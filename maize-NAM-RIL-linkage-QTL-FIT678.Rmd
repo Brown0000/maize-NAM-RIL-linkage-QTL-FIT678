@@ -1,0 +1,2836 @@
+---
+title: |
+  Linkage Mapping and QTL Analysis for Plant Height in a Maize
+  Recombinant Inbred Line Population Derived from the Nested
+  Association Mapping Panel
+author: |
+  Brown Yomi Wilson  
+  Graduate Research Intern, Germplasm Health/Virology and Molecular Diagnostic Unit, International Institute of Tropical
+  Agriculture (IITA), Ibadan, Nigeria  
+  Course: FIT678 -- Genetic Data Analysis in Plant Breeding  
+  Federal University of Vicosa (UFV), Brazil
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    number_sections: true
+    theme: flatly
+    highlight: tango
+    df_print: paged
+    fig_caption: true
+    fig_width: 9
+    fig_height: 6
+bibliography: references.bib
+---
+
+```{r global-options, include=FALSE}
+# document-wide chunk settings, echo on so all code shows in the
+# knitted report, warnings/messages off so package load chatter
+# doesn't clutter the output, cache off so a full knit always
+# reflects the current state of the saved objects
+knitr::opts_chunk$set(
+  echo    = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  cache   = FALSE
+)
+```
+
+---
+
+# Abstract {-}
+
+Plant height is an important agronomic trait in maize, influencing
+lodging resistance, biomass accumulation, and overall crop
+performance. This study aimed to construct a genetic linkage map
+and identify quantitative trait loci (QTL) associated with plant
+height in the Z020 recombinant inbred line (RIL) population, derived
+from a cross between NC350 and B73 within the maize Nested
+Association Mapping (NAM) panel. A linkage map spanning 1,548.7 cM
+across 10 linkage groups was constructed from 242 SNP markers using
+188 RILs genotyped with the MaizeSNP50 array. QTL mapping was
+performed using a progression of four complementary methods: single
+marker analysis, interval mapping, composite interval mapping, and
+multiple interval mapping. Single marker analysis identified 13
+markers significantly associated with plant height after Bonferroni
+correction, with the strongest signal on linkage group 6 explaining
+15.8% of phenotypic variance. Composite interval mapping confirmed
+three robust QTL on linkage groups 4, 6, and 8, and multiple
+interval mapping extended this to a final model of five QTL on
+linkage groups 4, 5, 6, 8, and 10, jointly explaining 42.3% of
+phenotypic variance. Four of the five QTL showed the NC350 allele
+associated with increased height, while one locus on linkage group 5
+showed the opposite, B73-favouring effect. No evidence of epistatic
+interaction was detected among the identified loci, suggesting a
+predominantly additive genetic architecture for plant height in this
+population. These findings identify a small number of moderate to
+large effect QTL suitable for further validation and potential use
+in marker-assisted selection for plant height in maize breeding
+programmes.
+
+---
+
+# Introduction
+
+Plant height is one of the most extensively studied architectural
+traits in maize, with direct consequences for crop performance.
+Excessively tall plants are more prone to stalk and root lodging,
+particularly under high planting density or adverse weather, while
+plant height is also closely linked to biomass production, light
+interception, and the partitioning of resources between vegetative
+and reproductive growth. As a quantitative trait, plant height is
+controlled by multiple genes of varying effect size, interacting
+with environmental conditions, making it a useful model trait for
+demonstrating the principles of linkage mapping and quantitative
+trait loci (QTL) analysis in a crop species of major global
+importance.
+
+The maize Nested Association Mapping (NAM) panel was developed to
+combine the advantages of linkage mapping and association mapping
+in a single resource, by crossing a diverse set of inbred founder
+lines to a common reference parent, B73, and advancing the progeny
+through repeated selfing to produce recombinant inbred line (RIL)
+populations. Each NAM family, such as the Z020 population used in
+this study, derived from a cross between NC350 and B73, captures
+the recombination history of a single biparental cross while
+remaining part of a larger, structured panel that allows findings
+to be compared and combined across many genetic backgrounds.
+Recombinant inbred lines, having undergone several generations of
+selfing, are particularly well suited to QTL mapping, since
+individuals are expected to be nearly homozygous at every locus, which
+simplifies the genetic model used in linkage and QTL analysis and
+allows each line to be phenotyped repeatedly without concern for loss
+of genetic fidelity between generations.
+
+A genetic linkage map, built from the observed recombination
+frequencies between molecular markers, provides the essential
+scaffold for QTL analysis. By ordering markers along each chromosome
+and converting recombination fractions into genetic distances, a
+linkage map allows the genome to be scanned systematically for
+regions associated with variation in a trait of interest. Once QTL
+have been localised, the markers flanking them can be used directly
+in marker-assisted selection, allowing breeders to select for
+favourable alleles at a target locus without needing to phenotype
+every individual in a breeding population, considerably accelerating
+the breeding cycle for traits that are slow, costly, or destructive
+to measure directly.
+
+The objectives of this study were threefold: first, to construct a
+genetic linkage map of the Z020 (NC350 x B73) RIL population using
+SNP marker data from the MaizeSNP50 array; second, to identify QTL
+associated with plant height using a progression of complementary
+mapping approaches of increasing statistical sophistication, namely
+single marker analysis, interval mapping, composite interval
+mapping, and multiple interval mapping; and third, to characterise
+the genetic architecture underlying plant height in this population,
+including the number, effect size, and direction of effect of the
+QTL identified, and to evaluate evidence for epistatic interaction
+among them.
+
+---
+
+# Materials and Methods
+
+## Plant Material and Mapping Population
+
+The mapping population used in this study was the Z020 recombinant
+inbred line (RIL) population, derived from a cross between NC350 and
+B73, two inbred lines from the maize Nested Association Mapping (NAM)
+panel [@McMullen2009]. The population consists of 188 RIL individuals
+produced by repeated selfing from a single F2 plant, reaching
+approximately the F6 to F7 generation. At this stage, residual
+heterozygosity is expected to be approximately 5.5% of the genome.
+The trait measured for QTL analysis was plant height (cm), recorded
+from the base of the plant to the tip of the tassel at maturity.
+
+## Molecular Markers and Genotypic Data
+
+Genotypic data were generated using the MaizeSNP50 Illumina
+BeadChip, which interrogates approximately 50,000 SNP loci across
+the maize genome. After initial filtering, 1,106 polymorphic SNP
+markers were retained for linkage analysis. Genotypes were coded as
+0 for the NC350 homozygote (AA), 2 for the B73 homozygote (BB), and
+1 for residual heterozygotes. Approximately 2,624 missing genotype
+calls were present across the full marker set. For linkage map
+construction, residual heterozygous calls (approximately 5.5% of
+all genotype cells) were recoded as missing data, consistent with
+the ri self cross type specification in the R/onemap package, which
+does not accommodate a heterozygote class for near-fully inbred RIL
+populations.
+
+## Marker Segregation Analysis
+
+Marker segregation was tested using the `test_segregation()` function
+in R/onemap [@Taniguti2023]. For a self-derived RIL population, each
+marker is expected to segregate at a 1:1 ratio of AA to BB
+homozygotes. A chi-square goodness-of-fit test was applied to each
+marker independently, and the experiment-wise significance threshold
+was adjusted for multiple testing using the Bonferroni correction
+(alpha / M, where M is the number of markers tested), yielding a
+corrected threshold of approximately 0.0000452. Markers showing
+significant segregation distortion were retained in the analysis,
+as a moderate number of distorted markers is biologically expected
+in RIL populations due to selection during selfing or allele-specific
+fitness differences between the NC350 and B73 genetic backgrounds.
+
+## Linkage Map Construction
+
+Two-point recombination fractions were estimated between all possible
+marker pairs using maximum likelihood via the `rf_2pts()` function in
+R/onemap, with a LOD threshold of 5.916 and a maximum recombination
+fraction of 0.35 used for marker grouping. Markers with identical or
+near-identical segregation patterns across all individuals were
+identified using `find_bins()` and reduced to a single representative
+per bin prior to ordering, to prevent inflation of chromosome length
+estimates. Marker ordering within each linkage group was performed
+using the `order_seq()` function with a branch-and-bound algorithm
+(n.init = 5, THRES = 3), and only markers placed with confidence
+(the safe set) were retained in the final map. Multipoint genetic
+distances were estimated using the Hidden Markov Model implemented
+in `onemap::map()`, and recombination fractions were converted to
+Kosambi centimorgans using the formula:
+d = 0.25 x log[(1 + 2r) / (1 - 2r)] x 100.
+The final linkage map and genotype data were exported for QTL
+analysis using the R/qtl package [@Broman2003].
+
+## QTL Mapping
+
+### Single Marker Analysis
+
+Single marker analysis (SMA) was performed by fitting a simple linear
+regression model for each marker independently:
+
+PlantHeight = mu + beta * x + epsilon
+
+where mu is the population mean, x is the marker genotype coded as 0
+(NC350 homozygote) or 1 (B73 homozygote), beta is the additive
+effect of the B73 allele relative to NC350, and epsilon is the
+residual error assumed to follow a normal distribution. LOD scores
+were calculated from the F statistic of each regression as:
+LOD = (N/2) x log10(F x (1/(N-2)) + 1).
+The experiment-wise significance threshold was determined by
+Bonferroni correction (alpha = 0.05 / M, where M is the number of
+markers tested). Effect size at the most significant marker was
+further estimated using the `fitqtl()` function in R/qtl with
+multiple imputation (n.draws = 32). Results were cross-validated
+using the `scanone(method = "mr")` function in R/qtl.
+
+### Interval Mapping
+
+Interval mapping (IM) was performed using the R/qtl package
+[@Broman2003]. Conditional QTL genotype probabilities were calculated
+at every 1 cM position along the linkage map using the
+`calc.genoprob()` function, allowing the genome scan to evaluate
+putative QTL positions between markers as well as at marker
+locations. The genome scan was performed using both the
+Expectation-Maximisation (EM) algorithm and Haley-Knott (HK)
+regression via the `scanone()` function. Genome-wide significance
+thresholds were determined empirically by 1,000 phenotype
+permutations for each method separately, with significance declared
+at alpha = 0.05. Effect size and the proportion of phenotypic
+variance explained were estimated at the peak QTL position using
+`fitqtl()` with multiple imputation (n.draws = 32).
+
+### Composite Interval Mapping
+
+Composite interval mapping (CIM) was performed using the `cim()` 
+function in R/qtl, with Haley-Knott regression and a set of 27 marker 
+cofactors selected automatically, following the convention of 
+2 x square root(N) for a population of 188 individuals. Two window sizes 
+were compared: 15 cM, in which cofactors within 15 cM of the position 
+being tested were excluded from the model, and an infinite window, in 
+which no cofactor from the same linkage group as the tested position 
+was permitted regardless of distance. A fixed random seed (678) was used 
+for both composite interval mapping runs to ensure reproducibility of marker 
+cofactor selection. Genome-wide significance was 
+assessed by 1,000 phenotype permutations using the infinite window 
+setting, as this represents the most conservative cofactor exclusion 
+rule and yields a threshold valid across both window sizes. Effect 
+size and proportion of phenotypic variance explained were estimated 
+using `fitqtl()` with multiple imputation (n.draws = 32), fitting all 
+confirmed QTL jointly in a single additive model.
+
+### Multiple Interval Mapping
+
+Multiple interval mapping (MIM) was performed in R/qtl, building 
+forward from the three QTL confirmed by composite interval mapping. 
+QTL positions were jointly refined using `refineqtl()`, and additional 
+QTL were sought iteratively using `addqtl()`, with each candidate 
+position tested against a penalised LOD threshold of 2.55, derived 
+from 1,000 two-dimensional genome-wide permutations (`scantwo()`) 
+following the method of Manichaikul et al. (2009). After each 
+addition, all QTL positions in the model were re-refined before the 
+next round of scanning, and the search concluded once no further 
+position exceeded the threshold. As an independent cross-check, an 
+automatic stepwise model search was also performed using 
+`stepwiseqtl()`, with a maximum of eight candidate QTL and the same 
+permutation-derived penalties. Evidence for epistatic interaction was 
+assessed in two ways: first using `addint()`, which tests pairwise 
+interactions among QTL already included in the model, and second 
+using a genome-wide two-dimensional scan (`scantwo()`), which can 
+detect interacting loci regardless of their individual main effects. 
+Interaction terms were evaluated against a penalised threshold of 
+4.01. Effect sizes and proportion of phenotypic variance explained for 
+the final model were estimated using `fitqtl()` with multiple 
+imputation (n.draws = 32).
+
+---
+
+# Results
+
+## Descriptive Statistics for Plant Height
+
+Plant height in the Z020 RIL population ranged from approximately
+89 cm to 202 cm across the 188 individuals, with a mean of
+approximately 137 cm and a standard deviation of approximately 16 cm.
+The distribution was approximately normal, as confirmed by a
+Shapiro-Wilk test (W = 0.9893, p = 0.2956), indicating no
+significant departure from normality at alpha = 0.05. This supports
+the use of linear regression-based QTL mapping methods, which assume
+normally distributed trait residuals. The approximately continuous
+distribution of plant height values across the RIL population is
+consistent with polygenic inheritance, where multiple loci of
+moderate effect each contribute to the trait (Figure 1).
+
+## Marker Segregation
+
+Chi-square segregation tests were performed for all 1,106 SNP
+markers under the expected 1:1 AA:BB ratio for a self-derived RIL
+population. Using the Bonferroni-corrected significance threshold
+of approximately 0.0000452, a subset of markers showed significant
+deviation from the expected segregation ratio. These markers were
+retained in the linkage analysis, as a moderate level of segregation
+distortion is biologically expected in RIL populations derived from
+crosses between genetically divergent inbred lines such as NC350 and
+B73, and removal of distorted markers is not standard practice unless
+distortion is extreme or clustered in a way that disrupts map
+construction (Figure 3).
+
+## Linkage Groups
+
+All markers were assigned to linkage groups using a LOD threshold
+of 5.916 and a maximum recombination fraction of 0.35. After
+removal of redundant markers using `find_bins()`, the 1,106 SNP
+markers were reduced to a set of unique segregation pattern
+representatives. All assigned markers grouped into exactly 10
+linkage groups, corresponding to the 10 chromosomes of the maize
+genome (2n = 20). Linkage group sizes after bin filtering and
+ordering ranged from 13 markers on linkage group 7 to 40 markers
+on linkage group 9. The successful recovery of exactly 10 linkage
+groups confirms that the marker density and population size of
+the Z020 RIL population were sufficient for complete genome coverage
+(Figure 4).
+
+## Linkage Map
+
+The final genetic linkage map comprised 242 SNP markers distributed
+across 10 linkage groups, with a total map length of 1,548.7 cM
+(Kosambi). Individual chromosome lengths ranged from 84.9 cM
+(linkage group 5) to 256.7 cM (linkage group 9). The average
+inter-marker spacing across the complete map was approximately
+6.4 cM. The recombination fraction heatmap for linkage group 1
+showed a clean diagonal band of low recombination fractions between
+adjacent markers, confirming correct marker ordering (Figure 5).
+Haplotype reconstruction for representative individuals revealed
+the expected mosaic structure of large homozygous blocks alternating
+between NC350 and B73 alleles, with colour transitions marking
+historical recombination breakpoints accumulated during the selfing
+generations (Figure 7). The complete 10-chromosome map is shown in
+Figure 8, and a summary of marker counts and chromosome lengths is
+presented in Table 1.
+
+## QTL Analysis
+
+### Single Marker Analysis
+
+Single marker analysis identified 13 markers significantly
+associated with plant height after Bonferroni correction
+(threshold: LOD = 3.11, corresponding to P < 0.0000452 across
+242 markers tested). The strongest association was detected at
+marker PZA01142.4 on linkage group 6 (position 109.4 cM;
+LOD = 6.62; R² = 0.158), indicating that this marker alone
+explains 15.8% of the phenotypic variance in plant height.
+At this marker, individuals homozygous for the NC350 allele
+were on average 12.87 cm taller than those homozygous for the
+B73 allele. A secondary peak was identified on linkage group 4
+(LOD approximately 5.0), a borderline signal was present on
+linkage group 5 (LOD approximately 3.0), and a notable peak
+was detected on linkage group 10 at marker PZA02386.2
+(LOD approximately 4.5). The direction of the allele effect
+at linkage group 10 was opposite to all other significant
+markers: at this locus, the B73 allele was associated with
+taller plants (additive effect approximately +8.97 cm),
+whereas the NC350 allele conferred the height advantage at
+all other significant positions. No significant associations
+were detected on linkage groups 1, 2, 3, 7, 8, or 9.
+Effect size at the top marker was estimated using `fitqtl()`:
+LOD = 6.87, variance explained = 15.49%, additive effect =
+-6.357 cm (half-difference parameterisation, equivalent to
+a full group difference of approximately -12.7 cm, consistent
+with the regression estimate above). The LOD profile across
+all 10 linkage groups is shown in Figure 10, and results for
+the top marker are summarised in Table 2.
+
+### Interval Mapping
+
+Interval mapping identified four genomic regions significantly
+associated with plant height at the genome-wide alpha = 0.05
+level, based on permutation-derived LOD thresholds of 2.99
+(EM method) and 2.79 (HK method) from 1,000 permutations
+(Figure 11). The strongest signal was located on linkage
+group 6 at 108 cM (LOD = 7.34, EM; LOD = 7.38, HK),
+explaining 16.09% of the phenotypic variance in plant height.
+The additive effect at this position was -6.49 cm
+(half-difference parameterisation), corresponding to a full
+group difference of approximately 13.0 cm, with NC350 alleles
+associated with taller plants. Three additional QTL exceeded
+the significance threshold: linkage group 4 at 67 cM
+(LOD = 4.75, EM), linkage group 5 at 14.9 cM (LOD = 3.20,
+EM), and linkage group 10 at 108 cM (LOD = 3.29, EM). The EM
+and HK methods produced nearly identical LOD profiles and
+identified the same set of significant positions, confirming
+the robustness of the interval mapping results. Compared with
+single marker analysis, interval mapping increased the peak
+LOD score on linkage group 6 from 6.62 to 7.34 and the
+estimated variance explained from 15.49% to 16.09%,
+consistent with the expected improvement in resolution and
+power when putative QTL positions between markers are
+evaluated. A summary of all significant QTL positions
+detected by interval mapping is presented in Table 2.
+
+
+### Composite Interval Mapping
+
+Composite interval mapping identified three genomic regions 
+significantly associated with plant height, consistent across both 
+window settings tested. Under the permutation-derived threshold of 
+LOD 6.24 (alpha = 0.05, infinite window), significant QTL were 
+detected on linkage group 4 at 66 cM (LOD = 14.58, window = infinite; 
+LOD = 10.18, window = 15 cM), linkage group 6 at 108 cM 
+(LOD = 18.58, window = infinite; LOD = 15.29, window = 15 cM), and 
+linkage group 8 at 126.5 cM (LOD = 6.95, window = infinite; 
+LOD = 7.57, window = 15 cM). The linkage group 6 signal remained the 
+strongest detected at any stage of this analysis, with its LOD score 
+increasing from 6.62 under single marker analysis to 7.34 under 
+interval mapping and to 18.58 under composite interval mapping, 
+indicating that controlling for background genetic variation 
+substantially sharpened this signal. A QTL on linkage group 9, 
+significant under interval mapping (LOD = 4.20), showed a 
+window-dependent result under composite interval mapping: 
+significant at the less conservative window = 15 cM setting 
+(LOD = 7.38) but not at the more conservative infinite window 
+(LOD = 4.33). This sensitivity to cofactor exclusion distance, in 
+contrast with the stability of the linkage group 4, 6, and 8 signals 
+across both window settings, suggests that part of the linkage 
+group 9 signal may reflect incompletely controlled background 
+variation rather than a fully independent genetic effect, and it 
+was therefore not carried forward into the three-QTL model used for 
+multiple interval mapping. The linkage group 8 QTL was not detected 
+by either single marker analysis or interval mapping, and only 
+emerged as significant once composite interval mapping accounted 
+for the effects of the linkage group 4 and linkage group 6 loci, 
+demonstrating the increased power of composite interval mapping to 
+resolve QTL of moderate effect against a background of larger-effect 
+loci elsewhere in the genome.
+
+Fitting all three QTL jointly using `fitqtl()` explained 33.65% of 
+phenotypic variance in plant height (LOD = 16.75). Each QTL 
+contributed independently and significantly to the model, as shown 
+by the drop-one-at-a-time analysis: the linkage group 4 QTL 
+accounted for 13.21% of variance (LOD = 7.41, additive effect = 
+-5.84 cm), the linkage group 6 QTL accounted for 18.85% of variance 
+(LOD = 10.21, additive effect = -6.97 cm), and the linkage group 8 
+QTL accounted for 4.42% of variance (LOD = 2.63, additive effect = 
+-3.36 cm). At all three positions, the NC350 allele was associated 
+with taller plants, consistent with the direction of effect observed 
+at the major linkage group 6 QTL throughout single marker analysis 
+and interval mapping. Individual contributions to variance explained 
+do not sum to the full model total, since the drop-one-at-a-time 
+percentages are each calculated relative to the complete three-QTL 
+model and can therefore overlap. The complete CIM LOD profile across 
+the genome, compared against interval mapping results for linkage 
+groups 4, 6, and 8, is shown in Figure 13.
+
+### Multiple Interval Mapping
+
+Multiple interval mapping was initiated from the three QTL confirmed 
+by composite interval mapping on linkage groups 4, 6, and 8. Joint 
+refinement of these positions produced only a small shift relative to 
+the composite interval mapping peaks (total LOD increase of 0.539), 
+indicating that the composite interval mapping positions were already 
+close to their jointly optimal locations. Iterative scanning for 
+additional QTL using `addqtl()` identified two further loci exceeding 
+the penalised threshold of 2.55: linkage group 10 at 102 cM 
+(LOD = 2.99) and linkage group 5 at 13 cM (LOD = 2.65). No further QTL 
+exceeded the threshold once these five positions were included in the 
+model, and the manual search concluded with a final model of five QTL 
+on linkage groups 4, 5, 6, 8, and 10.
+
+The final five-QTL model explained 42.31% of phenotypic variance in 
+plant height (LOD = 22.46). All five QTL remained individually 
+significant in a drop-one-at-a-time analysis (Table 4). The linkage 
+group 6 QTL (108 cM) contributed the largest individual effect 
+(15.29% of variance, additive effect = -6.39 cm), followed by linkage 
+group 4 (67 cM, 11.34% of variance, additive effect = -5.61 cm). 
+Linkage groups 8 (126.5 cM) and 10 (102 cM) contributed more modestly 
+(4.02% and 5.21% of variance respectively), and linkage group 5 
+(13 cM) contributed the smallest individual effect (3.90% of 
+variance). At linkage groups 4, 6, 8, and 10, the NC350 allele was 
+associated with taller plants, consistent with the direction of 
+effect observed throughout single marker analysis, interval mapping, 
+and composite interval mapping. The linkage group 5 QTL showed the 
+opposite direction of effect, with the B73 allele associated with 
+greater plant height (additive effect = +3.26 cm), the only 
+antagonistic locus identified in the final model.
+
+An automatic stepwise model search (`stepwiseqtl()`), performed 
+independently using the same permutation-derived penalties, selected 
+a more conservative three-QTL model comprising linkage groups 4, 6, 
+and 10 (pLOD = 9.59). This model omitted the linkage group 5 and 
+linkage group 8 QTL identified by the manual search. The discrepancy 
+reflects differences in search strategy rather than conflicting 
+evidence: the manual search evaluated each candidate QTL against the 
+addition of one locus to an existing model, while the stepwise search 
+evaluated the overall penalised likelihood of the complete model 
+globally. Linkage groups 4, 6, and 10 were identified as QTL by both 
+approaches and are considered the most robustly supported loci in 
+this analysis. Linkage groups 5 and 8 are reported as additional, 
+more marginal QTL, supported by the manual search and by their 
+individual significance in the five-QTL model, but not retained under 
+the stricter global penalty applied by automatic stepwise selection. 
+The LOD profile for the final five-QTL model is shown in Figure 14.
+
+No evidence of epistatic interaction was found between QTL for plant 
+height. Pairwise interaction tests among the five QTL in the final 
+model (`addint()`) found a maximum interaction LOD of 0.36, well 
+below the penalised threshold of 4.01. A genome-wide two-dimensional 
+scan (`scantwo()`) similarly found no chromosome pair with an 
+interaction LOD exceeding this threshold, the highest value observed 
+being 3.00, between two positions on linkage group 7. These results 
+indicate that the genetic architecture of plant height in this 
+population is predominantly additive, with the five identified QTL 
+acting independently rather than through interactive effects.
+
+---
+
+# Discussion
+
+Five QTL were identified for plant height in the Z020 (NC350 x
+B73) recombinant inbred line population, collectively explaining
+42.31% of phenotypic variance. The two strongest loci, on linkage
+groups 4 and 6, were detected consistently by every method applied
+in this study, from single marker analysis through to multiple
+interval mapping, with LOD scores and estimated effect sizes that
+remained stable or strengthened as each successive method corrected
+for background genetic variation. The linkage group 6 QTL in particular
+proved to be the most robust finding of the entire analysis, with its LOD 
+score rising from 6.62 under single marker analysis to 18.58 under composite 
+interval mapping, indicating that, much of the noise obscuring this signal under
+simpler methods was attributable to the combined effects of other loci elsewhere
+in the genome rather than to weak linkage or low marker informativeness at
+this locus.
+
+The progression from single marker analysis to multiple interval
+mapping also illustrates a more general point about QTL detection
+that is easy to overlook when only the final model is reported.
+The linkage group 8 QTL was undetectable by single marker analysis
+and interval mapping, and only became visible once composite
+interval mapping controlled for the variance explained by the
+linkage group 4 and linkage group 6 loci. This is a direct
+demonstration of the masking effect that larger-effect QTL can have
+on smaller, independent loci elsewhere in the genome, and it
+underlines why composite and multiple interval mapping are
+considered more powerful tools than single marker or simple
+interval mapping approaches for populations expected to carry more
+than one causal locus.
+
+A more cautious finding concerns the linkage groups 5 and 10 loci
+and the direction of their effects. In the single marker analysis,
+marker PZA02386.2 on linkage group 10 showed a positive effect of
+the B73 allele on plant height, the only marker in that analysis to
+contradict the otherwise consistent pattern of the NC350 allele
+conferring greater height. Once a full multiple-QTL model was
+fitted, however, the confirmed linkage group 10 QTL at 102 cM
+showed the conventional, NC350-favouring direction of effect, while
+the antagonistic, B73-favouring effect instead appeared at a newly
+identified QTL on linkage group 5. Two explanations seem plausible.
+It is possible that linkage groups 5 and 10 each carry genuinely
+distinct QTL with opposing effects on plant height, and that single
+marker analysis, lacking the ability to separate co-occurring
+signals, attributed an effect to the wrong general region of the
+genome. Alternatively, the single-marker estimate at linkage group
+10 may simply have been a less reliable, more noise-prone estimate
+that the better-controlled multiple-QTL model has now corrected.
+Distinguishing between these explanations would require fine
+mapping or independent validation in a related population, and is
+beyond the scope of the present analysis, but the discrepancy is a
+useful illustration of why effect direction, and not only effect
+significance, should be interpreted cautiously when comparing
+results across QTL mapping methods of differing sophistication.
+
+The disagreement between the manually constructed five-QTL model
+and the automatically selected three-QTL model from stepwiseqtl()
+deserves comment rather than resolution in favour of one over the
+other. Both searches used the same permutation-derived penalties
+and the same underlying data, yet reached different conclusions
+about whether the linkage group 5 and linkage group 8 loci belong
+in the final model. This is not evidence that either method is
+wrong, but rather a reflection of the different criteria each
+applies: the manual search asks whether one additional locus
+improves an existing model, evaluated sequentially, while the
+stepwise search asks whether the complete model, considered as a
+whole, justifies its total complexity. Linkage groups 4, 6, and 10
+were supported by both approaches and are considered the most
+reliable QTL identified in this study. Linkage groups 5 and 8 are
+reported as genuine but more marginal findings, each individually
+significant within the five-QTL model, but more sensitive to the
+specific statistical criterion applied. Future work with a larger
+population or denser marker coverage in these regions may help
+resolve whether these two loci represent stable, repeatable QTL or
+estimates closer to the threshold of detection.
+
+No evidence of epistatic interaction was found among any of the
+identified QTL, whether tested specifically among the five loci in
+the final model or across the genome as a whole. Within the
+limitations of the population size and marker density available
+here, this suggests that plant height in the Z020 population is
+controlled by a set of additive loci acting largely independently
+of one another, rather than through interactive or epistatic gene
+networks. This has a practical implication for breeding: favourable
+alleles at these loci, particularly the NC350 alleles at linkage
+groups 4, 6, 8, and 10, could in principle be combined through
+marker-assisted selection without needing to account for
+unfavourable allele combinations at interacting loci, simplifying
+the design of a selection strategy aimed at increasing or
+decreasing plant height as a breeding objective.
+
+The absence of significant QTL on six of the ten maize chromosomes
+(linkage groups 1, 2, 3, 7, and 9, after accounting for linkage
+group 5's modest signal) is consistent with a moderate-effect,
+oligogenic architecture for plant height rather than a highly
+polygenic trait controlled by very many loci of small effect
+scattered across the genome. This pattern aligns with previous
+findings in the maize nested association mapping panel, where
+plant height and related architecture traits have repeatedly been
+shown to be controlled by a relatively small number of QTL of
+moderate to large effect, alongside a larger number of
+undetectable, very small effect loci that individual mapping
+populations of this size are not well powered to detect.
+
+Several limitations of this study are worth noting. The linkage map
+was constructed from a single recombinant inbred line population of
+188 individuals, which, while adequate for detecting the moderate
+to large effect QTL reported here, has limited power to detect
+loci of small effect or to resolve closely linked QTL into separate
+peaks. Residual heterozygosity, present in approximately 5.5% of
+genotype calls and treated as missing data throughout this
+analysis, may have introduced a small amount of additional noise
+into recombination fraction and QTL effect estimates, though this
+is standard practice for recombinant inbred lines at this stage of
+inbreeding and is unlikely to have materially altered the major
+findings reported here. Finally, this analysis considered plant
+height in isolation; given that linkage group 6 and other loci
+identified here may also influence correlated traits such as ear
+height or leaf architecture, a multi-trait analysis would be a
+valuable extension of this work.
+
+---
+
+# References
+
+*To be managed via references.bib. Key citations to add: McMullen et al.
+2009 (NAM panel), Taniguti et al. 2023 (OneMap), Lander et al. 1987
+(MAPMAKER), Broman et al. 2003 (R/qtl), Gaynor et al. 2021 (AlphaSimR).*
+
+---
+
+# Linkage Mapping
+
+## Load Required Packages
+
+```{r load-packages}
+# onemap does the linkage map construction: segregation testing,
+# two-point rf, grouping, ordering, HMM distances, map plots
+#
+# if not installed, run once in console (not in a knitted chunk):
+#   install.packages("devtools")
+#   devtools::install_github("Cristianetaniguti/onemap",
+#                             dependencies = TRUE, upgrade = TRUE)
+
+library(onemap)
+```
+
+---
+
+## Load and Inspect the Raw Data
+
+```{r load-data}
+# Z020 (NC350 x B73) RIL data, csv lives in data/
+#
+# 188 rows = individuals (Z020E001-Z020E188)
+# 1144 cols total:
+#   col 1          = Ind, used as row names
+#   cols 2-1107    = 1106 SNP markers, 0 = NC350 (AA), 1 = het, 2 = B73 (BB)
+#   cols 1108-1144 = 38 phenotype columns
+# ~2624 missing genotype values, no missing phenotypes
+
+raw_data <- read.csv(
+  file      = "data/Z020 NC350 x B73.csv",
+  header    = TRUE,
+  row.names = 1      # Ind becomes row names
+)
+
+cat("Rows (individuals):", nrow(raw_data), "\n")
+cat("Columns (markers + phenotypes):", ncol(raw_data), "\n")
+```
+
+---
+
+## Separate Markers from Phenotypes
+
+```{r separate-markers-phenotypes}
+# split the csv into geno and pheno: a column counts as a marker if
+# every non-missing value is 0, 1, or 2
+#
+# PlantHeight (col 13 of phenotypes) is the trait I'm mapping
+
+is_marker_col <- function(x) {
+  non_missing <- x[!is.na(x)]
+  all(non_missing %in% c(0, 1, 2))
+}
+
+marker_flags <- sapply(raw_data, is_marker_col)
+marker_cols  <- names(raw_data)[marker_flags]
+pheno_cols   <- names(raw_data)[!marker_flags]
+
+cat("Marker columns identified:", length(marker_cols), "\n")
+cat("Phenotype columns identified:", length(pheno_cols), "\n")
+cat("\nPhenotype column names:\n")
+print(pheno_cols)
+
+geno_mat     <- as.matrix(raw_data[, marker_cols])
+phenotype_df <- raw_data[, pheno_cols]
+
+M <- ncol(geno_mat)
+N <- nrow(geno_mat)
+
+plant_height        <- phenotype_df[["PlantHeight"]]
+names(plant_height) <- rownames(raw_data)
+
+cat("\nPlantHeight summary:\n")
+print(summary(plant_height))
+```
+
+---
+
+## Descriptive Statistics for Plant Height
+
+```{r plant-height-distribution, fig.cap="Figure 1. Distribution of plant height (cm) across 188 Z020 NC350 x B73 RIL individuals. The red curve is the fitted normal distribution."}
+# plant height = base to tassel tip, quantitative trait, expect
+# roughly normal spread across the RILs
+#
+# normality matters here because the regression-based QTL methods
+# later assume normal residuals, hence the Shapiro-Wilk check below
+
+hist(
+  plant_height,
+  breaks = 20,
+  main   = "Distribution of Plant Height in Z020 RIL Population",
+  xlab   = "Plant Height (cm)",
+  ylab   = "Frequency",
+  col    = "steelblue",
+  border = "white"
+)
+
+curve(
+  dnorm(x, mean = mean(plant_height), sd = sd(plant_height)) *
+    length(plant_height) * diff(range(plant_height)) / 20,
+  add = TRUE,
+  col = "firebrick",
+  lwd = 2
+)
+
+legend(
+  "topright",
+  legend = c("Observed", "Normal curve"),
+  fill   = c("steelblue", NA),
+  lty    = c(NA, 1),
+  col    = c("steelblue", "firebrick"),
+  lwd    = c(NA, 2),
+  border = c("black", NA),
+  bty    = "n"
+)
+
+sw        <- shapiro.test(plant_height)
+cat("\nShapiro-Wilk normality test for PlantHeight:\n")
+cat("  W =", round(sw$statistic, 4), "\n")
+cat("  p-value =", round(sw$p.value, 4), "\n")
+if (sw$p.value > 0.05) {
+  cat("  No significant departure from normality (p > 0.05).\n")
+} else {
+  cat("  Significant departure from normality detected (p < 0.05).",
+      "Consider a log or square-root transformation before QTL mapping.\n")
+}
+```
+
+---
+
+## Convert Genotype Matrix to MAPMAKER Format
+
+```{r convert-to-raw}
+# onemap reads MAPMAKER/EXP .raw format, so converting the numeric
+# csv matrix to that first
+#
+# cross type "ri self": RILs from repeated selfing of a single F2,
+# ~F6-F7 here, ~5.5% residual het, no heterozygote class in the model
+#
+# recoding: 0 (NC350) -> A, 2 (B73) -> B, 1 (het) -> missing,
+# NA -> missing. Het calls go to missing because ri self has no het
+# class and 5.5% is little enough to lose without real cost
+
+cat("Individuals (N):", N, "\n")
+cat("Markers (M):", M, "\n")
+
+n_het <- sum(geno_mat == 1, na.rm = TRUE)
+cat("Residual heterozygous calls recoded as missing:", n_het,
+    "(", round(100 * n_het / (N * M), 2), "% of all cells)\n")
+
+onemap_mat <- matrix("", nrow = N, ncol = M,
+                     dimnames = dimnames(geno_mat))
+onemap_mat[geno_mat == 0]   <- "A"
+onemap_mat[geno_mat == 2]   <- "B"
+onemap_mat[geno_mat == 1]   <- "-"   # het -> missing
+onemap_mat[is.na(geno_mat)] <- "-"   # missing -> missing
+
+marker_names     <- paste0("*", colnames(onemap_mat))
+genotype_strings <- apply(onemap_mat, 2, paste, collapse = " ")
+marker_lines     <- paste(marker_names, genotype_strings, sep = " ")
+
+header <- c(
+  "data type ri self",
+  paste(N, M, 0)
+)
+
+writeLines(c(header, marker_lines), "data/Z020_NC350_x_B73.raw")
+
+cat("MAPMAKER .raw file written: data/Z020_NC350_x_B73.raw\n")
+cat("Lines written:", 2 + M, "(2 header + 1 per marker)\n")
+```
+
+---
+
+## Load Data into OneMap
+
+```{r load-into-onemap, fig.cap="Figure 2. Genotype dot plot for all 188 RIL individuals across all markers. Light dots = AA (NC350), dark dots = BB (B73), black dots = missing. A salt-and-pepper pattern confirms unbiased data loading."}
+# read_mapmaker() reads the .raw file into a onemap object, printing
+# it confirms cross type/individuals/markers came in correctly
+#
+# the plot should look like random salt-and-pepper, no stripes -
+# stripes would mean a block of individuals missing data across a
+# whole region, a data quality flag
+
+my_data <- read_mapmaker(file = "data/Z020_NC350_x_B73.raw")
+
+print(my_data)
+
+plot(my_data)
+
+save(my_data, file = "data/my_data.RData")
+cat("\nmy_data saved to data/my_data.RData\n")
+```
+
+---
+
+## Marker Segregation Testing
+
+```{r segregation-test, fig.cap="Figure 3. Chi-square segregation test results for all markers. Markers to the right of the dashed orange Bonferroni threshold line show significant deviation from the expected 1:1 AA:BB ratio."}
+# expected 1:1 AA:BB at every marker for a self-derived RIL
+#
+# test_segregation() runs chi-square per marker, Bonferroni_alpha()
+# adjusts the threshold for testing all M markers at once
+# (~0.000045 for M = 1106)
+#
+# distorted markers aren't automatically a problem here - some
+# distortion is normal in RILs from divergent parents (selection
+# during selfing, genotyping artefacts, real fitness differences)
+
+bc_test          <- test_segregation(my_data)
+bonferroni_alpha <- Bonferroni_alpha(bc_test)
+
+cat("Bonferroni-corrected significance threshold:", bonferroni_alpha, "\n")
+
+plot(bc_test)
+
+n_distorted <- sum(bc_test$Pvalue < bonferroni_alpha, na.rm = TRUE)
+cat("Significantly distorted markers:", n_distorted,
+    "(", round(100 * n_distorted / M, 1), "%)\n")
+```
+
+---
+
+## Two-Point Recombination Fractions
+
+```{r twopoint-rf}
+# rf_2pts() = pairwise recombination fraction for every marker pair,
+# 1106 markers -> 610,765 pairs, takes 5-20 min, don't close R
+#
+# LOD >= 3 between a pair means linked is 1000x more likely than
+# unlinked (r = 0.5)
+#
+# saving immediately once done - if R crashes before save this whole
+# calc has to run again
+
+rdata_twopts <- "data/bc_twopts.RData"
+
+if (file.exists(rdata_twopts)) {
+  load(rdata_twopts)
+  cat("Loaded two-point rf results from:", rdata_twopts, "\n")
+} else {
+  cat("Computing two-point rf for", M * (M - 1) / 2,
+      "marker pairs. Please wait...\n")
+  bc_twopts <- rf_2pts(my_data)
+  save(bc_twopts, file = rdata_twopts)
+  cat("Done. Results saved to:", rdata_twopts, "\n")
+}
+
+cat("\nSample output (markers 1 and 2):\n")
+print(bc_twopts, c(1, 2))
+```
+
+---
+
+## Suggest LOD Threshold for Grouping
+
+```{r lod-suggestion}
+# suggest_lod() recommends a grouping threshold based on N and M -
+# a data-driven cutoff beats the fixed LOD = 3 rule of thumb, since
+# a denser/larger population like this can detect weaker linkage
+# reliably, so the threshold needs to be higher to avoid merging
+# unlinked markers by mistake
+
+LOD_sug <- suggest_lod(my_data)
+cat("Suggested LOD threshold for grouping:", round(LOD_sug, 3), "\n")
+```
+
+---
+
+## Marker Grouping into Linkage Groups
+
+```{r marker-grouping, fig.cap="Figure 4. UPGMA dendrogram showing hierarchical clustering of all markers. Each coloured cluster enclosed in a red rectangle is one linkage group, corresponding to one of the 10 maize chromosomes."}
+# grouping markers on two criteria together: LOD >= LOD_sug and
+# rf <= 0.35
+#
+# maize = 10 chromosome pairs, so expecting 10 groups out of this.
+# if it comes out wrong: lower LOD merges groups, higher LOD splits
+# a chromosome into pieces
+#
+# group_upgma() clusters on the rf distance matrix and gives the
+# dendrogram - low rf merges happen near the bottom (tight linkage),
+# unlinked markers only merge near rf = 0.5 at the top
+
+bc_all_markers <- make_seq(bc_twopts, "all")
+
+# direct LOD + max.rf assignment
+bc_lgs <- group(bc_all_markers, max.rf = 0.35, LOD = LOD_sug)
+cat("\n--- Grouping result (LOD + max.rf method) ---\n")
+print(bc_lgs)
+
+# UPGMA clustering, gives the dendrogram
+bc_lgs_upgma <- group_upgma(
+  bc_all_markers,
+  expected.groups = 10,
+  inter           = FALSE
+)
+cat("\n--- Grouping result (UPGMA method) ---\n")
+print(bc_lgs_upgma)
+
+plot(bc_lgs_upgma)
+```
+
+---
+
+## Set the Kosambi Mapping Function
+
+```{r mapping-function}
+# converting recombination fraction (0-0.5) to genetic distance (cM)
+#
+# using Kosambi: d = 0.25 * ln[(1+2r)/(1-2r)], assumes positive
+# crossover interference (one crossover suppresses nearby ones) -
+# more realistic for maize than Haldane, gives shorter/tighter map
+# length estimates
+#
+# this sets the mapping function for the whole session, has to run
+# before any onemap::map() call below
+
+set_map_fun(type = "kosambi")
+cat("Mapping function set to: Kosambi\n")
+```
+
+---
+
+## Extract Linkage Groups as Sequence Objects
+
+```{r extract-lg-sequences}
+# group() stores assignments in bc_lgs$groups - named integer vector,
+# names = marker index, value = LG number (0 = unassigned)
+#
+# so max value (excluding 0/NA) = number of groups found
+#
+# make_seq(bc_lgs, i) pulls all markers in group i as a sequence
+# object ready for ordering
+
+cat("Class of bc_lgs:", class(bc_lgs), "\n")
+cat("Names in bc_lgs object:", paste(names(bc_lgs), collapse = ", "), "\n\n")
+
+group_vec <- bc_lgs$groups
+
+cat("Type of bc_lgs$groups:", typeof(group_vec), "\n")
+cat("Length:", length(group_vec), "\n\n")
+
+n_assigned   <- sum(group_vec > 0, na.rm = TRUE)
+n_unassigned <- sum(group_vec == 0, na.rm = TRUE)
+cat("Markers assigned to a linkage group:", n_assigned, "\n")
+cat("Markers unassigned (group = 0):", n_unassigned, "\n\n")
+
+n_groups <- max(group_vec, na.rm = TRUE)
+cat("Number of linkage groups found:", n_groups, "\n\n")
+
+lg_seqs <- vector("list", n_groups)
+for (i in seq_len(n_groups)) {
+  lg_seqs[[i]] <- make_seq(bc_lgs, i)
+}
+
+cat("Number of markers per linkage group:\n")
+for (i in seq_len(n_groups)) {
+  cat("  LG", i, ":", length(lg_seqs[[i]]$seq.num), "markers\n")
+}
+```
+
+---
+
+## Filter Redundant Markers with find_bins
+
+```{r filter-redundant-markers}
+# markers with identical genotype patterns across all 188
+# individuals add nothing to the map. order_seq() chokes on lots of
+# duplicate-pattern markers and spits out impossible chromosome
+# lengths (saw LG7 ~483 cM, LG9 ~972 cM before filtering)
+#
+# find_bins() run once on the full dataset, groups markers by
+# identical/near-identical pattern, keep the first marker per bin as
+# representative and drop the rest before ordering. dropped markers
+# can be added back later at their bin position with add_marker()
+# if needed
+#
+# exact = FALSE allows near-identical (up to 1 mismatch) patterns to
+# bin together - sensible given we have missing calls
+
+bins_all <- find_bins(my_data, exact = FALSE)
+
+bin_representatives <- unlist(lapply(bins_all$bins, function(b) b[1]))
+
+cat("Total bins (unique segregation patterns):",
+    length(bins_all$bins), "\n")
+cat("Representative markers retained:", length(bin_representatives), "\n")
+cat("Redundant markers removed:",
+    M - length(bin_representatives), "\n\n")
+
+lg_seqs_filtered <- vector("list", n_groups)
+for (i in seq_len(n_groups)) {
+  lg_markers          <- lg_seqs[[i]]$seq.num
+  filtered_markers    <- intersect(lg_markers, bin_representatives)
+  lg_seqs_filtered[[i]] <- make_seq(bc_twopts, filtered_markers)
+  cat("LG", i, ": reduced from", length(lg_markers),
+      "to", length(filtered_markers), "markers after bin filtering\n")
+}
+```
+
+---
+
+## Order Markers and Estimate Map for All Linkage Groups
+
+```{r order-all-lgs}
+# order_seq() = branch and bound ordering per linkage group,
+# make_seq(..., "safe") keeps only confidently-placed markers,
+# onemap::map() then runs the HMM for multipoint rf, stored in seq.rf
+#
+# this onemap version doesn't give cumulative cM positions directly
+# (no seq.pos), only per-interval rf in seq.rf, so converting to cM
+# manually with Kosambi and taking the cumulative sum myself
+
+rf_to_kosambi_cM <- function(rf) {
+  0.25 * log((1 + 2 * rf) / (1 - 2 * rf)) * 100
+}
+
+bc_map      <- vector("list", n_groups)
+bc_ord_safe <- vector("list", n_groups)
+
+for (lg in seq_len(n_groups)) {
+
+  cat("\n--- Linkage Group", lg, "---\n")
+  rdata_file <- paste0("data/bc_lg", lg, "_ord.RData")
+
+  if (file.exists(rdata_file)) {
+
+    load(rdata_file)   # restores lg_ord_safe
+    cat("  Loaded cached order from:", rdata_file, "\n")
+
+  } else {
+
+    cat("  Running order_seq() for LG", lg, "with",
+        length(lg_seqs_filtered[[lg]]$seq.num), "markers...\n")
+    cat("  This may take several minutes. Please wait.\n")
+
+    lg_ord_raw <- order_seq(
+      input.seq     = lg_seqs_filtered[[lg]],
+      n.init        = 5,
+      subset.search = "twopt",
+      twopt.alg     = "rcd",
+      THRES         = 3
+    )
+
+    lg_ord_safe <- make_seq(lg_ord_raw, "safe")
+    save(lg_ord_safe, file = rdata_file)
+    cat("  Order saved to:", rdata_file, "\n")
+  }
+
+  bc_ord_safe[[lg]] <- lg_ord_safe
+
+  bc_map[[lg]] <- onemap::map(lg_ord_safe)
+
+  rf_intervals <- bc_map[[lg]]$seq.rf
+  cM_intervals <- rf_to_kosambi_cM(rf_intervals)
+  total_cM     <- sum(cM_intervals, na.rm = TRUE)
+  n_markers    <- length(bc_map[[lg]]$seq.num)
+
+  cat("  Safe markers in map :", n_markers, "\n")
+  cat("  Map length (cM)     :", round(total_cM, 2), "\n")
+  cat("  Log-likelihood      :", round(bc_map[[lg]]$seq.like, 2), "\n")
+}
+
+save(bc_map, bc_ord_safe, file = "data/bc_map.RData")
+cat("\n=== All linkage groups complete ===\n")
+cat("Complete map saved to data/bc_map.RData\n")
+
+cat("\n=== Map Length Summary ===\n")
+cat(sprintf("%-6s  %-10s  %-12s  %-16s\n",
+            "LG", "Markers", "Length(cM)", "AvgSpacing(cM)"))
+cat(strrep("-", 50), "\n")
+
+total_mrk <- 0
+total_len <- 0
+
+for (lg in seq_len(n_groups)) {
+  n_mrk        <- length(bc_map[[lg]]$seq.num)
+  cM_intervals <- rf_to_kosambi_cM(bc_map[[lg]]$seq.rf)
+  len_cM       <- sum(cM_intervals, na.rm = TRUE)
+  avg_sp       <- len_cM / (n_mrk - 1)
+
+  cat(sprintf("%-6d  %-10d  %-12.1f  %-16.2f\n",
+              lg, n_mrk, len_cM, avg_sp))
+
+  total_mrk <- total_mrk + n_mrk
+  total_len <- total_len + len_cM
+}
+
+cat(strrep("-", 50), "\n")
+cat(sprintf("%-6s  %-10d  %-12.1f\n", "Total", total_mrk, total_len))
+```
+
+---
+
+## Draw the Recombination Fraction Heatmap for LG1
+
+```{r rf-heatmap-lg1, fig.cap="Figure 5. Recombination fraction heatmap for Linkage Group 1 after ordering. The clean red diagonal band confirms that markers placed close together on the map have low recombination fractions between them."}
+# rf_graph_table() = colour-coded pairwise rf matrix for one LG
+#
+# correct ordering should give a clean dark red diagonal (adjacent
+# markers tightly linked), off-diagonal yellow/green = markers far
+# apart on the chromosome. a patchy/broken diagonal would flag
+# ordering problems
+
+rf_graph_table(bc_ord_safe[[1]], mrk.axis = "numbers")
+```
+
+---
+
+## Draw the Genetic Linkage Map for LG1
+
+```{r draw-map-lg1, fig.cap="Figure 6. Genetic linkage map for Linkage Group 1 of the Z020 NC350 x B73 RIL population. Each tick mark represents one SNP marker. Distances are in Kosambi centimorgans."}
+# draw_map(): standard linkage map diagram - chromosome bar, tick
+# per marker, y-axis = cM from the top marker
+#
+# names = TRUE prints marker labels, cex.mrk = 0.5 keeps labels small
+# enough not to overlap on a dense chromosome
+
+draw_map(bc_map[[1]], names = TRUE, grid = TRUE, cex.mrk = 0.5)
+```
+
+---
+
+## Haplotype Reconstruction for LG1
+
+```{r haplotype-lg1, fig.cap="Figure 7. Haplotype blocks for four representative RIL individuals across Linkage Group 1. Red = NC350 allele (AA); blue = B73 allele (BB). Colour transitions mark historical recombination breakpoints that occurred during the selfing process."}
+# each RIL descends from one F2 plant via repeated selfing -
+# heterozygous stretches get replaced by fixed NC350/B73 blocks over
+# generations, colour transitions here mark where those crossovers
+# happened during selfing
+#
+# expect a few large homozygous blocks per chromosome at F6-F7, with
+# breakpoints scattered rather than clustered. where the two
+# haplotype tracks disagree, that's one of the ~5.5% residual hets
+#
+# progeny_haplotypes() needs the ordered SEQUENCE object
+# (bc_ord_safe), not the map object (bc_map) - map objects don't
+# carry the raw genotypes needed for this
+
+progeny_haplot <- progeny_haplotypes(
+  bc_ord_safe[[1]],
+  most_likely = TRUE,
+  ind         = 1:4,
+  group_names = "LG1"
+)
+
+plot(progeny_haplot, position = "split")
+```
+
+---
+
+## Draw the Complete 10-Chromosome Linkage Map
+
+```{r full-map, fig.cap="Figure 8. Complete genetic linkage map of the Z020 NC350 x B73 RIL population across all 10 maize chromosomes. Distances are in Kosambi centimorgans. Marker names are suppressed for clarity on dense chromosomes."}
+# draw_map() takes the full bc_map list and draws all 10 LGs side by
+# side - names = FALSE here since printing marker names on chromosomes
+# with hundreds of markers each just turns into a black smear
+
+draw_map(bc_map, names = FALSE, grid = TRUE, cex.mrk = 0.7)
+```
+
+---
+
+## Map Summary Statistics
+
+```{r map-summary}
+# Table 1 source data - chromosome length from seq.rf via Kosambi,
+# same approach as the order-all-lgs chunk since this onemap version
+# doesn't store seq.pos directly
+
+rf_to_kosambi_cM <- function(rf) {
+  0.25 * log((1 + 2 * rf) / (1 - 2 * rf)) * 100
+}
+
+cat("=== Linkage Map Summary (Table 1) ===\n\n")
+cat(sprintf("%-6s  %-10s  %-12s  %-16s\n",
+            "LG", "Markers", "Length(cM)", "AvgSpacing(cM)"))
+cat(strrep("-", 50), "\n")
+
+total_markers <- 0
+total_length  <- 0
+
+for (lg in seq_len(n_groups)) {
+  n_mrk        <- length(bc_map[[lg]]$seq.num)
+  cM_intervals <- rf_to_kosambi_cM(bc_map[[lg]]$seq.rf)
+  len_cM       <- sum(cM_intervals, na.rm = TRUE)
+  avg_sp       <- len_cM / (n_mrk - 1)
+
+  cat(sprintf("%-6d  %-10d  %-12.1f  %-16.2f\n",
+              lg, n_mrk, len_cM, avg_sp))
+
+  total_markers <- total_markers + n_mrk
+  total_length  <- total_length  + len_cM
+}
+
+cat(strrep("-", 50), "\n")
+cat(sprintf("%-6s  %-10d  %-12.1f\n",
+            "Total", total_markers, total_length))
+```
+
+---
+
+## Export Map for QTL Analysis
+
+```{r export-map}
+# write_map() exports the map in R/qtl-compatible format - LG
+# assignments, marker order, Kosambi cM positions
+#
+# PlantHeight also saved separately as csv, both files feed into
+# read.cross() for the QTL mapping sections below
+
+write_map(bc_map, file.out = "data/bc.map")
+cat("Linkage map exported to: data/bc.map\n")
+
+ph_df <- data.frame(
+  Ind         = names(plant_height),
+  PlantHeight = as.numeric(plant_height),
+  row.names   = NULL
+)
+write.csv(ph_df, "data/plant_height.csv", row.names = FALSE)
+cat("Plant height data saved to: data/plant_height.csv\n")
+cat("Both files are ready for QTL mapping.\n")
+```
+
+---
+
+# Session Information
+
+```{r session-info}
+# R and package versions, for reproducibility
+sessionInfo()
+```
+
+---
+
+# QTL Mapping
+
+## Load Required Packages
+
+```{r qtl-load-packages}
+# R/qtl handles everything from here on: SMA, interval mapping,
+# composite interval mapping, multiple interval mapping
+#
+# install once in console if needed: install.packages("qtl")
+
+library(qtl)
+```
+
+## Build the R/qtl Cross Object
+
+```{r load-cross-object}
+# read.cross(format = "mm") won't accept "data type ri self" in the
+# header - it wants "data type backcross" or "data type f2
+# intercross", with the real cross type passed separately via
+# crosstype
+#
+# fix: write a copy of the .raw file with the header line swapped to
+# "data type backcross" (R/qtl accepts this as a placeholder for mm
+# format), then pass crosstype = "riself" to read.cross() so the
+# correct genetic model still gets applied. genotype data itself is
+# untouched, only the header line changes
+
+raw_lines <- readLines("data/Z020_NC350_x_B73.raw")
+
+cat("Original header line:\n")
+cat(raw_lines[1], "\n\n")
+
+raw_lines[1] <- "data type backcross"
+
+writeLines(raw_lines, "data/Z020_qtl.raw")
+cat("Corrected .raw file written to data/Z020_qtl.raw\n")
+cat("New header line:", raw_lines[1], "\n\n")
+
+z020 <- read.cross(
+  format    = "mm",
+  file      = "data/Z020_qtl.raw",
+  mapfile   = "data/bc.map",
+  crosstype = "riself"
+)
+
+z020$pheno$PlantHeight <- plant_height[
+  match(rownames(z020$pheno), names(plant_height))
+]
+
+cat("\nCross object loaded successfully.\n")
+print(summary(z020))
+```
+
+## Filter Genotype Data to Match the Final Map
+
+```{r filter-geno-to-map}
+# z020 above was still built off the unfiltered marker set - need a
+# .raw file containing only the 242 markers that survived ordering,
+# matching data/bc.map exactly
+
+final_marker_names <- unlist(lapply(bc_map, function(x) {
+  colnames(geno_mat)[x$seq.num]
+}))
+
+cat("Total markers in final ordered map:", length(final_marker_names), "\n")
+
+geno_mat_filtered <- geno_mat[, final_marker_names]
+
+N_filt <- nrow(geno_mat_filtered)
+M_filt <- ncol(geno_mat_filtered)
+
+onemap_mat_filt <- matrix("", nrow = N_filt, ncol = M_filt,
+                          dimnames = dimnames(geno_mat_filtered))
+onemap_mat_filt[geno_mat_filtered == 0]   <- "A"
+onemap_mat_filt[geno_mat_filtered == 2]   <- "B"
+onemap_mat_filt[geno_mat_filtered == 1]   <- "-"
+onemap_mat_filt[is.na(geno_mat_filtered)] <- "-"
+
+marker_names_filt     <- paste0("*", colnames(onemap_mat_filt))
+genotype_strings_filt <- apply(onemap_mat_filt, 2, paste, collapse = " ")
+marker_lines_filt     <- paste(marker_names_filt, genotype_strings_filt,
+                               sep = " ")
+
+header_filt <- c(
+  "data type backcross",
+  paste(N_filt, M_filt, 0)
+)
+
+writeLines(c(header_filt, marker_lines_filt), "data/Z020_qtl_filtered.raw")
+
+cat("Filtered .raw file written: data/Z020_qtl_filtered.raw\n")
+cat("Contains exactly", M_filt, "markers matching data/bc.map\n")
+```
+
+## Reload with the Filtered Marker Set
+
+```{r reload-filtered-cross}
+# rebuilding z020 from the filtered .raw file so it lines up with
+# bc.map (242 markers), and restoring individual names by POSITION
+# since pull.geno() / read.cross() don't carry IDs through - matching
+# by name here would silently fail given how R/qtl handles this mm
+# format, position-based restoration is the reliable way
+
+load("data/my_data.RData")
+load("data/bc_map.RData")
+
+ph_df        <- read.csv("data/plant_height.csv")
+plant_height <- ph_df$PlantHeight
+names(plant_height) <- ph_df$Ind
+
+raw_data <- read.csv(
+  file      = "data/Z020 NC350 x B73.csv",
+  header    = TRUE,
+  row.names = 1
+)
+
+is_marker_col <- function(x) {
+  non_missing <- x[!is.na(x)]
+  all(non_missing %in% c(0, 1, 2))
+}
+marker_flags <- sapply(raw_data, is_marker_col)
+marker_cols  <- names(raw_data)[marker_flags]
+geno_mat     <- as.matrix(raw_data[, marker_cols])
+
+library(onemap)
+library(qtl)
+
+z020 <- read.cross(
+  format    = "mm",
+  file      = "data/Z020_qtl_filtered.raw",
+  mapfile   = "data/bc.map",
+  crosstype = "riself"
+)
+
+# restore PlantHeight by position, not match() - raw_data and z020
+# hold the same 188 individuals in the same original order
+z020$pheno$PlantHeight <- plant_height[rownames(raw_data)]
+
+cat("All objects reloaded successfully.\n")
+cat("bc_map groups:", length(bc_map), "\n")
+cat("z020 individuals:", nrow(z020$pheno), "\n")
+```
+
+## Single Marker Analysis
+
+```{r genotype-phenotype-image, fig.cap="Figure 9. Genotype matrix sorted by plant height. Vertical banding indicates marker-trait association."}
+# quick visual before the formal test: sort individuals by height,
+# look for vertical banding in the genotype matrix lined up the same
+# way
+#
+# no real association -> genotypes look like random salt-and-pepper
+# regardless of sort order. real association -> a colour band
+# clusters among the tallest or shortest plants at that marker
+#
+# pull.geno() doesn't carry row names through from the mm format
+# reader, so restoring them by position from raw_data (same order,
+# confirmed earlier)
+
+geno_matrix <- pull.geno(z020)
+rownames(geno_matrix) <- rownames(raw_data)
+
+ph_sorted   <- sort(plant_height)
+sorted_idx  <- match(names(ph_sorted), rownames(geno_matrix))
+
+cat("Matched individuals:", sum(!is.na(sorted_idx)), "of", length(sorted_idx), "\n\n")
+
+layout(matrix(c(1, 2, 2, 2), nrow = 1, ncol = 4, byrow = TRUE))
+
+image(
+  t(as.matrix(ph_sorted)),
+  col  = rainbow(n = 256, end = 2/3, rev = TRUE),
+  axes = FALSE,
+  xlab = "Plant Height (cm)",
+  ylab = paste("Individuals (N =", nrow(geno_matrix), ")")
+)
+
+image(
+  t(geno_matrix[sorted_idx, ]),
+  col  = c("yellow", "blue"),
+  axes = FALSE,
+  xlab = paste("Markers (M =", ncol(geno_matrix), ")")
+)
+```
+
+```{r sma-linear-regression}
+# fitting PlantHeight ~ marker genotype for every marker
+# independently:
+#
+#   PlantHeight_i = mu + beta*x_i + epsilon_i
+#
+#   x_i coded 0 (NC350 homozygote) / 1 (B73 homozygote)
+#   beta = additive effect of B73 allele vs NC350
+#
+# LOD converted from the F statistic:
+#   LOD = (N/2) * log10(F * 1/(N-2) + 1)
+# this puts SMA on the same LOD scale as IM/CIM/MIM later, so
+# results are directly comparable across sections
+#
+# Bonferroni threshold uses alpha/M for the 242 markers in the final
+# map
+#
+# rownames restored by position again, same reasoning as above -
+# match() on this data silently drops everything to NA, learned that
+# the hard way earlier in the project
+
+geno_sma  <- pull.geno(z020)
+rownames(geno_sma) <- rownames(raw_data)
+pheno_sma <- z020$pheno$PlantHeight
+
+geno_sma  <- geno_sma - 1   # AA -> 0, BB -> 1
+
+n_markers_sma <- ncol(geno_sma)
+N_sma         <- length(pheno_sma)
+
+cat("Markers tested:", n_markers_sma, "\n")
+cat("Individuals:", N_sma, "\n\n")
+
+res_sma <- matrix(
+  NA,
+  nrow     = n_markers_sma,
+  ncol     = 7,
+  dimnames = list(
+    colnames(geno_sma),
+    c("Intercept", "Effect(cm)", "t value", "P value",
+      "F value", "LOD score", "R-squared")
+  )
+)
+
+for (m in seq_len(n_markers_sma)) {
+
+  marker_geno <- geno_sma[, m]
+  df_temp     <- data.frame(PH = pheno_sma, G = marker_geno)
+  df_temp     <- df_temp[complete.cases(df_temp), ]
+
+  if (nrow(df_temp) < 10) next
+
+  fit <- summary(lm(PH ~ G, data = df_temp))
+  n_i <- nrow(df_temp)
+
+  LOD <- (n_i / 2) * log10(
+    fit$fstatistic[1] * (1 / (n_i - 1 - 1)) + 1
+  )
+
+  res_sma[m, ] <- c(
+    fit$coefficients[1, 1],
+    fit$coefficients[2, 1],
+    fit$coefficients[2, 3],
+    fit$coefficients[2, 4],
+    fit$fstatistic[1],
+    LOD,
+    fit$r.squared
+  )
+}
+
+res_sma <- res_sma[complete.cases(res_sma), ]
+
+bonf_p   <- 0.05 / nrow(res_sma)
+bonf_lod <- min(
+  res_sma[res_sma[, "P value"] <= bonf_p, "LOD score"],
+  na.rm = TRUE
+)
+
+cat("Bonferroni P threshold:", signif(bonf_p, 3), "\n")
+cat("Corresponding LOD threshold:", round(bonf_lod, 3), "\n\n")
+
+sig_markers <- res_sma[res_sma[, "P value"] < bonf_p, , drop = FALSE]
+cat("Significant markers after Bonferroni correction:",
+    nrow(sig_markers), "\n\n")
+
+if (nrow(sig_markers) > 0) {
+  cat("Top significant markers (sorted by LOD score):\n")
+  print(
+    round(
+      sig_markers[order(sig_markers[, "LOD score"],
+                        decreasing = TRUE), ],
+      4
+    )
+  )
+}
+
+save(res_sma, bonf_lod, sig_markers,
+     file = "data/sma_results.RData")
+cat("\nSMA results saved to data/sma_results.RData\n")
+```
+
+```{r sma-lod-plot, fig.cap="Figure 10. Single marker analysis LOD scores across all 10 linkage groups, in map order. The dashed red line marks the Bonferroni significance threshold."}
+# plotting LOD by cumulative map position across all 10 LGs, with
+# chromosome boundaries marked - lets the whole genome scan be read
+# as one continuous figure rather than 10 separate ones
+
+chr_map   <- pull.map(z020)
+lod_df    <- data.frame(
+  marker   = rownames(res_sma),
+  LOD      = res_sma[, "LOD score"],
+  stringsAsFactors = FALSE
+)
+
+lod_df$chr <- NA
+lod_df$pos <- NA
+
+for (ch in seq_along(chr_map)) {
+  mrk_names <- names(chr_map[[ch]])
+  idx       <- lod_df$marker %in% mrk_names
+  lod_df$chr[idx] <- ch
+  lod_df$pos[idx] <- chr_map[[ch]][
+    match(lod_df$marker[idx], mrk_names)
+  ]
+}
+
+chr_lengths  <- sapply(chr_map, max)
+chr_offsets  <- c(0, cumsum(chr_lengths[-length(chr_lengths)]))
+lod_df$cum_pos <- lod_df$pos + chr_offsets[lod_df$chr]
+
+lod_df <- lod_df[order(lod_df$cum_pos), ]
+
+plot(
+  lod_df$cum_pos, lod_df$LOD,
+  type  = "h",
+  col   = "steelblue",
+  lwd   = 1.2,
+  xlab  = "Map position (cM)",
+  ylab  = "LOD score",
+  main  = "Single Marker Analysis -- Plant Height",
+  xaxt  = "n",
+  ylim  = c(0, max(lod_df$LOD, bonf_lod * 1.2, na.rm = TRUE))
+)
+
+for (ch in seq_along(chr_map)) {
+  mid_pos <- chr_offsets[ch] + chr_lengths[ch] / 2
+  axis(1, at = mid_pos, labels = paste0("LG", ch), las = 2, cex.axis = 0.7)
+  if (ch < length(chr_map)) {
+    abline(v = chr_offsets[ch] + chr_lengths[ch],
+           col = "grey70", lty = 2, lwd = 0.8)
+  }
+}
+
+abline(h = bonf_lod, col = "firebrick", lty = 2, lwd = 1.5)
+text(
+  x      = max(lod_df$cum_pos, na.rm = TRUE) * 0.02,
+  y      = bonf_lod + max(lod_df$LOD, na.rm = TRUE) * 0.03,
+  labels = paste0("Threshold (LOD = ", round(bonf_lod, 2), ")"),
+  col    = "firebrick",
+  cex    = 0.75,
+  adj    = 0
+)
+```
+
+```{r sma-scanone-mr}
+# cross-checking the manual lm() loop above against R/qtl's own
+# marker regression (scanone method = "mr") - if these two
+# independent routes agree, that's good confidence the manual loop
+# and the LOD conversion formula are both correct
+
+z020.mr <- scanone(
+  z020,
+  pheno.col = "PlantHeight",
+  method    = "mr"
+)
+
+cat("scanone() marker regression complete.\n\n")
+cat("Markers with LOD above Bonferroni threshold (",
+    round(bonf_lod, 3), "):\n")
+print(summary(z020.mr, threshold = bonf_lod))
+
+save(z020.mr, file = "data/z020_mr.RData")
+
+plot(
+  z020.mr,
+  ylab = "LOD score",
+  main = "Single Marker Analysis (scanone) -- Plant Height",
+  type = "p",
+  col  = "steelblue"
+)
+abline(h = bonf_lod, col = "firebrick", lty = 2, lwd = 1.5)
+```
+
+```{r sma-top-marker-plot}
+# pulling out the top SMA marker for a closer look, plotPXG() shows
+# the phenotype-by-genotype distribution directly
+
+top_marker <- rownames(z020.mr)[which.max(z020.mr$lod)]
+
+cat("Top marker from SMA:", top_marker, "\n")
+cat("LOD score:", round(max(z020.mr$lod, na.rm = TRUE), 3), "\n")
+cat("Chromosome:", z020.mr$chr[which.max(z020.mr$lod)], "\n")
+cat("Position (cM):", round(z020.mr$pos[which.max(z020.mr$lod)], 2), "\n\n")
+
+if (top_marker %in% rownames(res_sma)) {
+  cat("Additive effect (BB - AA):",
+      round(res_sma[top_marker, "Effect(cm)"], 3), "cm\n")
+  cat("R-squared:",
+      round(res_sma[top_marker, "R-squared"], 4), "\n")
+  cat("Variance explained:",
+      round(res_sma[top_marker, "R-squared"] * 100, 2), "%\n")
+}
+
+plotPXG(z020, top_marker, pheno.col = "PlantHeight")
+```
+
+```{r sma-fitqtl}
+# fitqtl() at the top SMA marker, using multiple imputation
+# (n.draws = 32) for a proper effect size estimate rather than just
+# trusting the nearest-marker lm() coefficient
+#
+# step = 0 here since this is a marker-position-only fit, not a
+# between-marker interval estimate
+
+z020 <- sim.geno(z020, n.draws = 32, step = 0)
+
+top_chr <- z020.mr$chr[which.max(z020.mr$lod)]
+top_pos <- z020.mr$pos[which.max(z020.mr$lod)]
+
+cat("Fitting QTL at:\n")
+cat("  Marker    :", top_marker, "\n")
+cat("  Chromosome:", top_chr, "\n")
+cat("  Position  :", round(top_pos, 2), "cM\n\n")
+
+z020.qtl <- makeqtl(z020, chr = top_chr, pos = top_pos)
+
+z020.fit <- fitqtl(
+  z020,
+  qtl     = z020.qtl,
+  formula = y ~ Q1,
+  get.ests = TRUE,
+  pheno.col = "PlantHeight"
+)
+
+print(summary(z020.fit))
+
+save(z020.qtl, z020.fit, top_marker, top_chr, top_pos,
+     file = "data/sma_fitqtl.RData")
+cat("\nfitqtl results saved to data/sma_fitqtl.RData\n")
+```
+
+## Single Marker Analysis Results Summary
+
+Single marker analysis tested all 242 markers in the final linkage
+map for association with plant height, identifying 13 markers
+significant after Bonferroni correction. The strongest signal, on
+linkage group 6, explained nearly 16% of phenotypic variance on its
+own, a substantial proportion for a single marker and an early
+indication that this region carries a major QTL for plant height.
+Secondary signals on linkage groups 4 and 5 were weaker but
+consistent with the pattern later confirmed by more sophisticated
+mapping methods. The one unexpected result was the antagonistic
+marker on linkage group 10, where the B73 allele rather than NC350
+was associated with greater height, a finding that warranted closer
+attention in later sections. The absence of any significant markers
+on six of the ten chromosomes pointed towards a moderate-effect
+genetic architecture rather than a highly polygenic one, a pattern
+that held up throughout the rest of the analysis.
+
+---
+
+## Interval Mapping
+
+```{r calc-genoprob}
+# IM needs genotype probabilities at every position along the map,
+# not just at the markers themselves - calc.genoprob() does this
+# using the flanking markers and the Kosambi distances already in
+# z020
+#
+# step = 1 -> a probability calculated every 1 cM, on top of the
+# marker positions, ~1550 testing positions across the ~1549 cM map
+#
+# riself means only 2 QTL genotype classes possible at any position
+# (NC350/NC350 or B73/B73) - simpler than the backcross/F2 cases with
+# 2-4 classes
+
+z020 <- calc.genoprob(z020, step = 1)
+
+cat("Genotype probabilities calculated.\n")
+cat("Step size: 1 cM\n")
+cat("Number of chromosomes:", nchr(z020), "\n")
+cat("Total map length (cM):", round(sum(sapply(pull.map(z020), max)), 1), "\n")
+```
+
+```{r scanone-im}
+# scanone() at every genoprob position, fitting plant height against
+# QTL genotype prob and recording LOD - running both:
+#
+#   em : exact ML via Expectation-Maximization, slower, the gold
+#        standard hk is approximating
+#   hk : Haley-Knott regression, fast least-squares approximation,
+#        holds up well with moderate missing data and decent marker
+#        spacing
+#
+# if em and hk profiles match closely, that's good evidence the
+# result isn't an artefact of the estimation method chosen
+
+z020.em <- scanone(z020, pheno.col = "PlantHeight", method = "em")
+cat("EM scan complete.\n")
+
+z020.hk <- scanone(z020, pheno.col = "PlantHeight", method = "hk")
+cat("HK scan complete.\n\n")
+
+cat("--- Top position, EM method ---\n")
+print(z020.em[which.max(z020.em$lod), ])
+
+cat("\n--- Top position, HK method ---\n")
+print(z020.hk[which.max(z020.hk$lod), ])
+
+save(z020.em, z020.hk, file = "data/im_scanone.RData")
+cat("\nSaved to data/im_scanone.RData\n")
+```
+
+```{r im-permutation-test}
+# permutation test for the genome-wide significance threshold -
+# shuffle PlantHeight across individuals 1000 times, breaking the
+# real genotype-phenotype link, keep the single highest LOD from each
+# shuffled scan. 95th percentile of those 1000 max LODs = alpha 0.05
+# threshold
+#
+# running both methods to match what gets compared later:
+#   hk : fast, runs directly
+#   em : slow on a 1549 cM map x 1000 perms, cached to disk so a
+#        session restart doesn't mean starting over
+#
+# set.seed() so both runs are reproducible if re-run
+
+set.seed(678)
+z020.perm.hk <- scanone(
+  z020,
+  pheno.col = "PlantHeight",
+  method    = "hk",
+  n.perm    = 1000,
+  verbose   = FALSE
+)
+cat("HK permutations complete.\n")
+
+rdata_perm_em <- "data/im_perm_em.RData"
+
+if (file.exists(rdata_perm_em)) {
+
+  load(rdata_perm_em)
+  cat("Loaded cached EM permutation results from:", rdata_perm_em, "\n")
+
+} else {
+
+  cat("Running 1000 EM permutations. This will take a while.\n")
+  cat("R will save the result automatically when done.\n")
+
+  set.seed(678)
+  z020.perm.em <- scanone(
+    z020,
+    pheno.col = "PlantHeight",
+    method    = "em",
+    n.perm    = 1000,
+    verbose   = FALSE
+  )
+
+  save(z020.perm.em, file = rdata_perm_em)
+  cat("EM permutations complete. Saved to:", rdata_perm_em, "\n")
+}
+
+cat("\n--- LOD threshold at alpha = 0.05 ---\n")
+cat("HK method:\n")
+print(summary(z020.perm.hk, alpha = 0.05))
+
+cat("EM method:\n")
+print(summary(z020.perm.em, alpha = 0.05))
+
+save(z020.perm.hk, z020.perm.em,
+     file = "data/im_perm_both.RData")
+cat("\nBoth permutation objects saved to data/im_perm_both.RData\n")
+```
+
+```{r im-results-summary}
+# summary() with perms= returns only positions clearing the
+# permutation threshold at the chosen alpha - one row per peak
+#
+# note: summary() on a scanone perm object returns a named numeric
+# vector, so pulling the threshold needs ["lod"], not $lod
+
+thres_em <- summary(z020.perm.em, alpha = 0.05)["lod"]
+thres_hk <- summary(z020.perm.hk, alpha = 0.05)["lod"]
+
+cat("=== Significant QTL positions from Interval Mapping ===\n\n")
+
+cat("--- EM method (threshold LOD =", round(thres_em, 2), ") ---\n")
+print(summary(z020.em, perms = z020.perm.em, alpha = 0.05))
+
+cat("\n--- HK method (threshold LOD =", round(thres_hk, 2), ") ---\n")
+print(summary(z020.hk, perms = z020.perm.hk, alpha = 0.05))
+```
+
+```{r im-lod-plot, fig.cap="Figure 11. Interval mapping LOD profiles across the genome, comparing the EM (red) and HK (blue) methods. Dashed lines mark each method's genome-wide significance threshold."}
+# overlaying em and hk LOD profiles plus their thresholds - should
+# sit almost on top of each other, any visible gap is where missing
+# genotype data makes the hk approximation drift slightly from the
+# exact em solution
+
+plot(
+  z020.em, z020.hk,
+  ylab  = "LOD score",
+  main  = "Interval Mapping -- Plant Height",
+  col   = c("red", "blue"),
+  lwd   = 2
+)
+
+add.threshold(z020.em, perms = z020.perm.em, col = "red",   lty = 2)
+add.threshold(z020.hk, perms = z020.perm.hk, col = "blue",  lty = 2)
+
+legend(
+  "topright",
+  legend  = c("EM", "HK"),
+  lty     = 1,
+  lwd     = 2,
+  col     = c("red", "blue"),
+  box.col = NA
+)
+```
+
+```{r im-fitqtl}
+# fitqtl() at the IM peak (LG6, 108 cM), using multiple imputation
+# so the effect estimate is attributed to the inferred QTL position
+# rather than whichever marker happens to be nearest
+#
+# re-running sim.geno() with step = 1 here to match the IM grid - the
+# earlier sim.geno() call used step = 0 for SMA and that draw set
+# doesn't apply to interval positions
+#
+# riself -> fitqtl() fits 2 classes (NC350/NC350 vs B73/B73), and the
+# additive effect it reports is HALF the homozygote difference -
+# different convention to the lm() effect from SMA, which is the
+# FULL difference. multiply fitqtl's estimate by 2 to compare the two
+
+z020 <- sim.geno(z020, n.draws = 32, step = 1)
+
+im_top_chr <- 6
+im_top_pos <- 108
+
+z020.im.qtl <- makeqtl(z020, chr = im_top_chr, pos = im_top_pos)
+
+cat("QTL object built at:\n")
+cat("  Chromosome:", im_top_chr, "\n")
+cat("  Position  :", im_top_pos, "cM\n\n")
+print(z020.im.qtl)
+
+z020.im.fit <- fitqtl(
+  z020,
+  qtl       = z020.im.qtl,
+  formula   = y ~ Q1,
+  get.ests  = TRUE,
+  pheno.col = "PlantHeight"
+)
+
+print(summary(z020.im.fit))
+
+save(z020.im.qtl, z020.im.fit,
+     file = "data/im_fitqtl.RData")
+cat("\nfitqtl results saved to data/im_fitqtl.RData\n")
+```
+
+## Interval Mapping Results Summary
+
+Interval mapping confirmed the linkage group 6 signal as the
+dominant QTL for plant height, with its LOD score rising from 6.62
+under single marker analysis to 7.34, reflecting the added
+resolution gained from testing positions between markers rather
+than only at marker locations. Three further regions on linkage
+groups 4, 5, and 10 cleared the genome-wide significance threshold,
+matching the candidate regions flagged by single marker analysis.
+The close agreement between the EM and HK estimation methods across
+the whole genome scan gave confidence that these results were not
+sensitive to the choice of algorithm. Taken together with the single
+marker analysis, this stage of the project confirmed four candidate
+QTL regions worth carrying forward into composite interval mapping,
+where background genetic variation could be properly controlled for.
+
+---
+
+## Reload Point: Restoring Objects for a New Session
+
+```{r reload-saved-objects}
+# run this at the start of any new R session to bring back every
+# object needed for the rest of the report, without rerunning any of
+# the slow computation (two-point rf, marker ordering, permutations)
+
+library(onemap)
+library(qtl)
+
+raw_data <- read.csv(
+  file      = "data/Z020 NC350 x B73.csv",
+  header    = TRUE,
+  row.names = 1
+)
+
+is_marker_col <- function(x) {
+  non_missing <- x[!is.na(x)]
+  all(non_missing %in% c(0, 1, 2))
+}
+marker_flags <- sapply(raw_data, is_marker_col)
+marker_cols  <- names(raw_data)[marker_flags]
+geno_mat     <- as.matrix(raw_data[, marker_cols])
+
+ph_df        <- read.csv("data/plant_height.csv")
+plant_height <- ph_df$PlantHeight
+names(plant_height) <- ph_df$Ind
+
+load("data/my_data.RData")    # my_data
+load("data/bc_twopts.RData")  # bc_twopts
+load("data/bc_map.RData")     # bc_map, bc_ord_safe
+
+z020 <- read.cross(
+  format    = "mm",
+  file      = "data/Z020_qtl_filtered.raw",
+  mapfile   = "data/bc.map",
+  crosstype = "riself"
+)
+z020$pheno$PlantHeight <- plant_height[rownames(raw_data)]
+
+z020 <- calc.genoprob(z020, step = 1)
+z020 <- sim.geno(z020, n.draws = 32, step = 1)
+
+load("data/sma_results.RData")   # res_sma, bonf_lod, sig_markers
+load("data/z020_mr.RData")       # z020.mr
+load("data/sma_fitqtl.RData")    # z020.qtl, z020.fit, top_marker, top_chr, top_pos
+
+load("data/im_scanone.RData")    # z020.em, z020.hk
+load("data/im_perm_both.RData")  # z020.perm.em, z020.perm.hk
+load("data/im_fitqtl.RData")     # z020.im.qtl, z020.im.fit
+
+cat("All objects restored successfully.\n")
+cat("bc_map groups:", length(bc_map), "\n")
+cat("z020 individuals:", nrow(z020$pheno), "\n")
+cat("Total markers in map:", sum(sapply(pull.map(z020), length)), "\n")
+```
+
+---
+
+## Composite Interval Mapping
+
+```{r cim-load-packages-check}
+# cim() lives in qtl, already loaded - just confirming the objects
+# needed from interval mapping are in the environment before going
+# further. if starting fresh, run reload-saved-objects above first
+
+library(qtl)
+
+stopifnot(exists("z020"))
+stopifnot(exists("z020.em"))
+stopifnot(exists("z020.perm.em"))
+
+cat("z020 cross object present:", exists("z020"), "\n")
+cat("Individuals:", nind(z020), "\n")
+cat("Total markers:", totmar(z020), "\n")
+cat("Chromosomes:", nchr(z020), "\n")
+cat("Genotype probabilities calculated:",
+    "prob" %in% names(z020$geno[[1]]), "\n")
+
+cat("\nReady to proceed with Composite Interval Mapping.\n")
+```
+
+```{r cim-window15}
+# cim() tests plant height against the QTL genotype probability at
+# each position, plus a set of marker cofactors elsewhere in the
+# genome that soak up the effect of other QTL so they don't blur the
+# test at the current position
+#
+# n.marcovar = 27, following 2*sqrt(N) for N = 188 - matches the
+# professor's value exactly since our population is the same size
+#
+# window = 15: cofactors within 15 cM of the tested position get
+# excluded, so a cofactor can't accidentally absorb the very QTL
+# being tested
+#
+# method = "hk" - cim() is heavier than plain scanone, hk keeps it
+# practical
+#
+# running this straight on z020, no convert2riself() needed since
+# ours was built as riself from the start (the professor's tutorial
+# converts because his file was read in as a backcross)
+
+set.seed(678)
+z020.cim15 <- cim(
+  cross      = z020,
+  pheno.col  = "PlantHeight",
+  method     = "hk",
+  n.marcovar = 27,
+  window     = 15
+)
+
+cat("CIM with window = 15 cM complete.\n\n")
+
+cat("Peak LOD per chromosome:\n")
+print(summary(z020.cim15))
+
+save(z020.cim15, file = "data/cim_window15.RData")
+cat("\nSaved to data/cim_window15.RData\n")
+```
+
+```{r cim-window-inf}
+# same cim() run but window = Inf - the strictest setting, no
+# cofactor allowed anywhere on the SAME linkage group as the tested
+# position, only cofactors from other chromosomes
+#
+# useful as a check against the window = 15 result: a peak holding up
+# under window = Inf is good evidence it's real and not an artefact
+# of a nearby cofactor distorting the local model. a peak that
+# shrinks a lot under window = Inf needs more caution
+
+set.seed(678)
+z020.cimInf <- cim(
+  cross      = z020,
+  pheno.col  = "PlantHeight",
+  method     = "hk",
+  n.marcovar = 27,
+  window     = Inf
+)
+
+cat("CIM with window = Inf complete.\n\n")
+
+cat("Peak LOD per chromosome:\n")
+print(summary(z020.cimInf))
+
+save(z020.cimInf, file = "data/cim_windowInf.RData")
+cat("\nSaved to data/cim_windowInf.RData\n")
+```
+
+```{r cim-permutation}
+# same permutation logic as IM, just on cim() now - shuffle
+# PlantHeight 1000 times, record the max LOD per shuffle, 95th
+# percentile = alpha 0.05 threshold
+#
+# running the permutation at window = Inf only: it's the most
+# conservative setting so the resulting threshold is valid across
+# both window sizes, and running just one permutation set instead of
+# two saves a lot of time given this is the slowest step in the CIM
+# section
+#
+# cached to disk, this one's slow enough that a session restart
+# shouldn't mean starting over
+
+rdata_perm_cim <- "data/cim_perm.RData"
+
+if (file.exists(rdata_perm_cim)) {
+
+  load(rdata_perm_cim)
+  cat("Loaded cached CIM permutation results from:", rdata_perm_cim, "\n")
+
+} else {
+
+  cat("Running 1000 CIM permutations with window = Inf.\n")
+  cat("This is the slowest step in the CIM section. Please wait.\n")
+
+  set.seed(678)
+  z020.perm.cim <- cim(
+    cross      = z020,
+    pheno.col  = "PlantHeight",
+    method     = "hk",
+    n.marcovar = 27,
+    window     = Inf,
+    n.perm     = 1000
+  )
+
+  save(z020.perm.cim, file = rdata_perm_cim)
+  cat("CIM permutations complete. Saved to:", rdata_perm_cim, "\n")
+}
+
+cim_threshold <- summary(z020.perm.cim, alpha = 0.05)
+cat("\n--- CIM LOD threshold at alpha = 0.05 ---\n")
+print(cim_threshold)
+```
+
+```{r cim-apply-threshold}
+# applying the LOD 6.24 threshold to both window scans to see which
+# peaks are genuinely significant rather than just locally tall
+#
+# summary() with perms= only returns positions clearing the
+# threshold, max one row per chromosome (the highest peak that
+# clears it)
+
+cat("=== Significant QTL from CIM, window = 15 ===\n")
+cim15_sig <- summary(z020.cim15, perms = z020.perm.cim, alpha = 0.05)
+print(cim15_sig)
+
+cat("\n=== Significant QTL from CIM, window = Inf ===\n")
+cimInf_sig <- summary(z020.cimInf, perms = z020.perm.cim, alpha = 0.05)
+print(cimInf_sig)
+
+save(cim15_sig, cimInf_sig, cim_threshold,
+     file = "data/cim_significant.RData")
+cat("\nSaved to data/cim_significant.RData\n")
+```
+
+```{r cim-plot, fig.cap="Figure 12. Composite interval mapping LOD profiles across all 10 linkage groups, comparing window = 15 cM (orange) and window = infinite (cyan) cofactor exclusion settings. The dashed red line marks the genome-wide significance threshold (LOD 6.24, alpha = 0.05). Green ticks mark positions of marker cofactors selected for the window = 15 scan."}
+# both CIM window scans overlaid, threshold drawn as a horizontal
+# line, green ticks via add.cim.covar() showing where the window = 15
+# cofactors were picked - comparing window settings visually makes it
+# obvious which peaks are stable vs sensitive to the window choice
+
+plot(
+  z020.cim15, z020.cimInf,
+  col  = c("orange", "cyan"),
+  main = "Composite Interval Mapping -- Plant Height"
+)
+
+add.threshold(
+  z020.cim15,
+  perms = z020.perm.cim,
+  alpha = 0.05,
+  col   = "firebrick",
+  lty   = 2
+)
+
+add.cim.covar(z020.cim15, col = "darkgreen")
+
+legend(
+  "topright",
+  legend = c("window = 15", "window = Inf", "Threshold (LOD 6.24)"),
+  lty    = c(1, 1, 2),
+  col    = c("orange", "cyan", "firebrick"),
+  box.col = NA
+)
+```
+
+```{r cim-makeqtl}
+# building the QTL object from the 3 CIM-confirmed positions (LG4,
+# LG6, LG8), using the window = Inf positions since that's the
+# stricter scan and its peaks are a touch more stable (no
+# same-chromosome cofactor can nudge them)
+#
+# sim.geno() re-run here so the imputation draws match the current
+# genoprob grid - same n.draws = 32, step = 1 as the IM fitqtl step
+
+z020 <- sim.geno(z020, n.draws = 32, step = 1)
+
+cim_chr <- cimInf_sig$chr
+cim_pos <- cimInf_sig$pos
+
+cat("Building QTL object at:\n")
+for (i in seq_along(cim_chr)) {
+  cat("  Q", i, ": LG", cim_chr[i], " at ", round(cim_pos[i], 1),
+      " cM (LOD ", round(cimInf_sig$lod[i], 2), ")\n", sep = "")
+}
+
+z020.cim.qtl <- makeqtl(z020, chr = cim_chr, pos = cim_pos)
+print(z020.cim.qtl)
+
+save(z020.cim.qtl, cim_chr, cim_pos, file = "data/cim_qtl_object.RData")
+cat("\nSaved to data/cim_qtl_object.RData\n")
+```
+
+```{r cim-fitqtl-combined}
+# fitting all 3 QTL together rather than one at a time:
+#
+#   - joint %var properly accounts for any shared variance between
+#     QTL instead of double-counting overlap from 3 separate
+#     single-QTL fits
+#   - the drop-one-at-a-time table shows what each QTL contributes
+#     ABOVE the other two, a fairer measure of independent
+#     importance than a stand-alone effect
+#
+# formula = y ~ Q1 + Q2 + Q3, additive only, no interaction term -
+# epistasis testing is MIM's job later, not CIM's
+
+z020.cim.fit <- fitqtl(
+  z020,
+  qtl       = z020.cim.qtl,
+  formula   = y ~ Q1 + Q2 + Q3,
+  get.ests  = TRUE,
+  pheno.col = "PlantHeight"
+)
+
+cat("=== Combined three-QTL model (CIM) ===\n\n")
+print(summary(z020.cim.fit))
+
+save(z020.cim.fit, file = "data/cim_fitqtl.RData")
+cat("\nSaved to data/cim_fitqtl.RData\n")
+```
+
+```{r cim-vs-im-plot, fig.cap="Figure 13. LOD profiles for linkage groups 4, 6, and 8 comparing interval mapping (red, EM method) and composite interval mapping with an infinite window (cyan). Dashed lines show the genome-wide significance threshold for each method (IM: red dashed; CIM: cyan dashed). Green ticks mark cofactor marker positions selected for composite interval mapping."}
+# IM vs CIM, restricted to the 3 chromosomes CIM confirmed (LG4, 6,
+# 8) - cutting the rest of the genome out of the plot makes the
+# sharpening effect of CIM much easier to actually see
+#
+# using z020.em for IM (exact ML, the method treated as primary IM
+# result) and z020.cimInf for CIM (stricter window, the one the QTL
+# model above is built from)
+
+plot(
+  z020.em, z020.cimInf,
+  chr  = c(4, 6, 8),
+  col  = c("red", "cyan"),
+  main = "Interval Mapping versus Composite Interval Mapping"
+)
+
+add.threshold(
+  z020.em,
+  perms = z020.perm.em,
+  alpha = 0.05,
+  col   = "red",
+  lty   = 2
+)
+
+add.threshold(
+  z020.cimInf,
+  perms = z020.perm.cim,
+  alpha = 0.05,
+  col   = "cyan",
+  lty   = 2
+)
+
+add.cim.covar(z020.cimInf, chr = c(4, 6, 8), col = "darkgreen")
+
+legend(
+  "topleft",
+  legend  = c("IM (EM method)", "CIM (window = Inf)",
+              "IM threshold", "CIM threshold"),
+  lty     = c(1, 1, 2, 2),
+  col     = c("red", "cyan", "red", "cyan"),
+  box.col = NA
+)
+```
+
+## Composite Interval Mapping Results Summary
+
+Composite interval mapping confirmed three QTL for plant height,
+all consistent across two cofactor exclusion window settings
+(15 cM and infinite). The strongest QTL, on linkage group 6 at
+108 cM, showed a marked increase in LOD score relative to single
+marker analysis and interval mapping (6.62, 7.34, and 17.97
+respectively), indicating that controlling for background genetic
+variation substantially sharpened this signal. A new QTL on linkage
+group 8 was detected only under composite interval mapping,
+illustrating the method's ability to resolve moderate-effect loci
+that are masked by larger-effect QTL elsewhere in the genome under
+simpler mapping approaches. Conversely, a marginally significant
+signal on linkage group 9 detected under interval mapping did not
+hold up under composite interval mapping, suggesting it reflected
+uncontrolled background variation rather than an independent QTL.
+Jointly, the three confirmed QTL (linkage groups 4, 6, and 8)
+explained 33.87% of phenotypic variance in plant height. At every
+position, the NC350 allele was associated with greater plant
+height, consistent with the direction of effect observed throughout
+single marker analysis and interval mapping.
+
+---
+
+## Multiple Interval Mapping
+
+```{r mim-load-and-check}
+# MIM picks up directly from CIM - z020 already has calc.genoprob()
+# and sim.geno() attached, no new cross object or map needed
+#
+# just confirming the CIM objects are still around before going
+# further (skipping the professor's summaryMap/plotMap/plotRF checks
+# here since the map was already verified back in the linkage mapping
+# section, no need to repeat that)
+
+library(qtl)
+
+stopifnot(exists("z020"))
+stopifnot(exists("z020.cim.qtl"))   # the 3-QTL object from CIM (LG4, 6, 8)
+stopifnot(exists("z020.cim.fit"))   # the fitqtl() result from CIM
+
+cat("Starting Multiple Interval Mapping.\n")
+cat("Carrying forward CIM-confirmed QTL: LG4, LG6, LG8\n\n")
+
+print(z020.cim.qtl)
+```
+
+```{r mim-refineqtl}
+# refineqtl() re-optimises each QTL position one at a time while
+# holding the others fixed - a QTL's best position can shift slightly
+# once the others are properly accounted for jointly, which CIM's
+# cofactor approach doesn't quite do (cofactors control for
+# background variance but don't jointly optimise QTL positions
+# against each other)
+#
+# iterates through Q1/Q2/Q3 testing small shifts, repeats until no
+# more LOD gain, prints its own progress as it goes
+
+z020.ref <- refineqtl(
+  cross     = z020,
+  pheno.col = "PlantHeight",
+  qtl       = z020.cim.qtl,
+  formula   = y ~ Q1 + Q2 + Q3
+)
+
+cat("\nRefined QTL positions:\n")
+print(z020.ref)
+
+save(z020.ref, file = "data/mim_ref1.RData")
+cat("\nSaved to data/mim_ref1.RData\n")
+```
+
+```{r mim-scantwo-permutations}
+# scantwo() tests every PAIR of genome positions jointly, not single
+# positions like scanone/cim - needed here for two things:
+#
+#   1. penalised LOD thresholds (via permutation) for proper model
+#      selection - without this there's no principled way to decide
+#      whether one more QTL, or one more interaction term, actually
+#      earns its place in the model
+#   2. later, scanning the WHOLE genome for epistasis, including
+#      pairs where neither locus is significant as a main effect on
+#      its own
+#
+# WARNING: this is the slowest step in the whole project by a wide
+# margin - every pair of positions, x 1000 permuted datasets. can run
+# for hours. cached to disk like the other slow steps. do NOT
+# interrupt this once it starts or it has to begin again from scratch
+
+rdata_perm_two <- "data/mim_scantwo_perm.RData"
+
+if (file.exists(rdata_perm_two)) {
+
+  load(rdata_perm_two)
+  cat("Loaded cached scantwo permutation results from:",
+      rdata_perm_two, "\n")
+
+} else {
+
+  cat("Running 1000 scantwo permutations. This is the slowest step\n")
+  cat("in the whole project and may take several hours.\n")
+  cat("Do not close R or restart your session while this runs.\n\n")
+
+  set.seed(678)
+  z020.perm.two <- scantwo(
+    z020,
+    pheno.col = "PlantHeight",
+    method    = "hk",
+    n.perm    = 1000
+  )
+
+  save(z020.perm.two, file = rdata_perm_two)
+  cat("\nscantwo permutations complete. Saved to:", rdata_perm_two, "\n")
+}
+
+cat("\n--- scantwo permutation thresholds (alpha = 0.05) ---\n")
+print(summary(z020.perm.two, alpha = 0.05))
+```
+
+```{r mim-fitqtl-refined}
+# re-fitting the 3-QTL model at the REFINED positions (LG4 @ 67,
+# LG6 @ 108, LG8 @ 126) rather than the original CIM peaks - since
+# positions moved slightly under refineqtl(), the test stats need
+# recalculating at the new positions
+
+z020.fit.ref <- fitqtl(
+  z020,
+  pheno.col = "PlantHeight",
+  qtl       = z020.ref,
+  formula   = y ~ Q1 + Q2 + Q3,
+  get.ests  = TRUE
+)
+
+cat("=== Refined three-QTL model ===\n\n")
+print(summary(z020.fit.ref))
+
+save(z020.fit.ref, file = "data/mim_fitqtl_ref1.RData")
+cat("\nSaved to data/mim_fitqtl_ref1.RData\n")
+```
+
+```{r mim-addqtl-round1}
+# addqtl() scans the genome asking: if a QTL got added HERE, on top
+# of the 3 already in the model, how much would the model improve?
+# different from a plain scan since the existing 3 QTL are held in
+# as covariates the whole time, so this is really hunting for a
+# fourth, independent signal rather than just re-finding the same 3
+# peaks
+#
+# comparing the top hit against the av1 threshold (2.55) from the
+# scantwo permutations - that's the threshold calibrated specifically
+# for "is one more additive QTL worth adding to an existing model"
+
+z020.add1 <- addqtl(
+  z020,
+  pheno.col = "PlantHeight",
+  qtl       = z020.ref,
+  formula   = y ~ Q1 + Q2 + Q3
+)
+
+cat("=== addqtl scan: searching for a 4th QTL ===\n\n")
+cat("Top candidate position per chromosome:\n")
+print(summary(z020.add1))
+
+cat("\nOverall maximum:\n")
+print(max(z020.add1))
+
+cat("\nav1 threshold (from scantwo permutations):", 2.55, "\n")
+
+top_add1_lod <- max(z020.add1)$lod
+if (top_add1_lod > 2.55) {
+  cat("Result: LOD", round(top_add1_lod, 2),
+      "exceeds the threshold. This position is a candidate to add.\n")
+} else {
+  cat("Result: LOD", round(top_add1_lod, 2),
+      "does not exceed the threshold. No further QTL to add.\n")
+}
+
+save(z020.add1, file = "data/mim_addqtl1.RData")
+cat("\nSaved to data/mim_addqtl1.RData\n")
+```
+
+```{r mim-add-fourth-qtl}
+# adding the LG10 candidate (102 cM) to the 3-QTL model and
+# refining again - a new QTL can shift where the others sit best,
+# so always refine right after adding
+#
+# NOTE: max(z020.add1)$chr comes back as an R factor. c() converts
+# factors to their internal INTEGER CODE rather than the text label
+# when mixed with a character vector - this silently turned
+# chromosome "10" into "1" the first time I ran this, caught it by
+# checking the printed chromosome against what addqtl actually
+# reported. as.character() wrapped around the factor fixes it, kept
+# here as a standing reminder for the rest of the addqtl rounds below
+
+chr <- c(as.character(max(z020.add1)$chr), z020.ref$chr)
+pos <- c(max(z020.add1)$pos, z020.ref$pos)
+
+cat("Building 4-QTL object at:\n")
+for (i in seq_along(chr)) {
+  cat("  Q", i, ": LG", chr[i], " at ", round(pos[i], 1), " cM\n", sep = "")
+}
+
+z020.qtl2 <- makeqtl(z020, chr = chr, pos = pos)
+print(z020.qtl2)
+
+z020.ref2 <- refineqtl(
+  z020,
+  pheno.col = "PlantHeight",
+  qtl       = z020.qtl2,
+  formula   = y ~ Q1 + Q2 + Q3 + Q4
+)
+
+cat("\nRefined 4-QTL positions:\n")
+print(z020.ref2)
+
+save(z020.qtl2, z020.ref2, file = "data/mim_qtl2_ref2.RData")
+cat("\nSaved to data/mim_qtl2_ref2.RData\n")
+```
+
+```{r mim-fitqtl-4qtl}
+# fitting the 4-QTL model (LG4, LG6, LG8, LG10) - this is also where
+# the LG10 sign gets checked against the antagonistic marker
+# PZA02386.2 flagged back in SMA, where B73 was associated with
+# taller plants, opposite to every other significant marker at the
+# time
+
+z020.fit2 <- fitqtl(
+  z020,
+  pheno.col = "PlantHeight",
+  qtl       = z020.ref2,
+  formula   = y ~ Q1 + Q2 + Q3 + Q4,
+  get.ests  = TRUE
+)
+
+cat("=== Four-QTL model (LG4, LG6, LG8, LG10) ===\n\n")
+print(summary(z020.fit2))
+
+save(z020.fit2, file = "data/mim_fitqtl2.RData")
+cat("\nSaved to data/mim_fitqtl2.RData\n")
+```
+
+```{r mim-addqtl-round2}
+# second addqtl() round, now conditional on all 4 confirmed QTL -
+# checking for a 5th independent signal, same logic as round 1
+
+z020.add2 <- addqtl(
+  z020,
+  pheno.col = "PlantHeight",
+  qtl       = z020.ref2,
+  formula   = y ~ Q1 + Q2 + Q3 + Q4
+)
+
+cat("=== addqtl scan: searching for a 5th QTL ===\n\n")
+print(summary(z020.add2))
+
+cat("\nOverall maximum:\n")
+print(max(z020.add2))
+
+cat("\nav1 threshold (from scantwo permutations):", 2.55, "\n")
+
+top_add2_lod <- max(z020.add2)$lod
+if (top_add2_lod > 2.55) {
+  cat("Result: LOD", round(top_add2_lod, 2),
+      "exceeds the threshold. This position is a candidate to add.\n")
+} else {
+  cat("Result: LOD", round(top_add2_lod, 2),
+      "does not exceed the threshold. Stop here, no further QTL.\n")
+}
+
+save(z020.add2, file = "data/mim_addqtl2.RData")
+cat("\nSaved to data/mim_addqtl2.RData\n")
+```
+
+```{r mim-add-fifth-qtl}
+# adding the LG5 candidate (13 cM, LOD 2.65) - worth flagging this is
+# a marginal addition, only just over the 2.55 threshold, not as
+# clear-cut as LG4/LG6/LG8/LG10 were
+#
+# as.character() applied to the chromosome value again, same factor
+# coercion issue as before, not taking any chances with it a second
+# time
+
+chr <- c(as.character(max(z020.add2)$chr), z020.ref2$chr)
+pos <- c(max(z020.add2)$pos, z020.ref2$pos)
+
+cat("Building 5-QTL object at:\n")
+for (i in seq_along(chr)) {
+  cat("  Q", i, ": LG", chr[i], " at ", round(pos[i], 1), " cM\n", sep = "")
+}
+
+z020.qtl3 <- makeqtl(z020, chr = chr, pos = pos)
+print(z020.qtl3)
+
+z020.ref3 <- refineqtl(
+  z020,
+  pheno.col = "PlantHeight",
+  qtl       = z020.qtl3,
+  formula   = y ~ Q1 + Q2 + Q3 + Q4 + Q5
+)
+
+cat("\nRefined 5-QTL positions:\n")
+print(z020.ref3)
+
+save(z020.qtl3, z020.ref3, file = "data/mim_qtl3_ref3.RData")
+cat("\nSaved to data/mim_qtl3_ref3.RData\n")
+```
+
+```{r mim-fitqtl-5qtl}
+# fitting the 5-QTL model (LG4, LG5, LG6, LG8, LG10) - checking
+# whether LG5 holds up as genuinely significant once properly fitted
+# jointly, given it came in as a marginal addqtl() hit, and checking
+# its effect size/direction relative to the other four
+
+z020.fit3 <- fitqtl(
+  z020,
+  pheno.col = "PlantHeight",
+  qtl       = z020.ref3,
+  formula   = y ~ Q1 + Q2 + Q3 + Q4 + Q5,
+  get.ests  = TRUE
+)
+
+cat("=== Five-QTL model (LG4, LG5, LG6, LG8, LG10) ===\n\n")
+print(summary(z020.fit3))
+
+save(z020.fit3, file = "data/mim_fitqtl3.RData")
+cat("\nSaved to data/mim_fitqtl3.RData\n")
+```
+
+```{r mim-addqtl-round3}
+# third addqtl() round, conditional on all 5 confirmed QTL - checking
+# whether a 6th turns up, or whether this is where the manual search
+# naturally stops
+
+z020.add3 <- addqtl(
+  z020,
+  pheno.col = "PlantHeight",
+  qtl       = z020.ref3,
+  formula   = y ~ Q1 + Q2 + Q3 + Q4 + Q5
+)
+
+cat("=== addqtl scan: searching for a 6th QTL ===\n\n")
+print(summary(z020.add3))
+
+cat("\nOverall maximum:\n")
+print(max(z020.add3))
+
+cat("\nav1 threshold (from scantwo permutations):", 2.55, "\n")
+
+top_add3_lod <- max(z020.add3)$lod
+if (top_add3_lod > 2.55) {
+  cat("Result: LOD", round(top_add3_lod, 2),
+      "exceeds the threshold. This position is a candidate to add.\n")
+} else {
+  cat("Result: LOD", round(top_add3_lod, 2),
+      "does not exceed the threshold. STOP. The manual search ends",
+      "at five QTL.\n")
+}
+
+save(z020.add3, file = "data/mim_addqtl3.RData")
+cat("\nSaved to data/mim_addqtl3.RData\n")
+```
+
+```{r mim-calc-penalties}
+# stepwiseqtl() needs the penalty values in a specific format, not
+# the summary table printed earlier - calc.penalties() converts the
+# scantwo permutation results into the three values it actually uses:
+#
+#   main  : penalty per extra QTL (main effect)
+#   heavy : interaction penalty, from the "full" threshold, used
+#           comparing a 2-QTL interacting model against no QTL
+#   light : interaction penalty, from the "fv1" threshold, used
+#           comparing a 2-QTL interacting model against the best
+#           single-QTL model
+#
+# these let stepwiseqtl() weigh whether a QTL or an interaction
+# genuinely earns its complexity, same logic as the av1 threshold
+# used by hand throughout the addqtl() rounds above
+
+penalties <- calc.penalties(z020.perm.two)
+
+cat("Penalties for stepwiseqtl():\n")
+print(penalties)
+
+save(penalties, file = "data/mim_penalties.RData")
+cat("\nSaved to data/mim_penalties.RData\n")
+```
+
+```{r mim-stepwiseqtl}
+# stepwiseqtl() runs an automatic forward/backward search: starts
+# from no QTL, adds the best position, keeps adding (refining
+# positions each time) as long as pLOD keeps improving, then works
+# backward checking whether dropping any QTL still leaves an equal or
+# better pLOD
+#
+# this is the independent cross-check against the manual search - if
+# they agree, good confirmation the manual process found the right
+# answer. if they disagree, that's worth digging into rather than
+# brushing aside
+#
+# max.qtl = 8 gives some headroom above the manual 5-QTL result in
+# case the automatic search lands somewhere different
+
+z020.step <- stepwiseqtl(
+  z020,
+  pheno.col = "PlantHeight",
+  max.qtl   = 8,
+  method    = "hk",
+  penalties = penalties
+)
+
+cat("\n=== stepwiseqtl() final model ===\n\n")
+print(z020.step)
+
+save(z020.step, file = "data/mim_stepwiseqtl.RData")
+cat("\nSaved to data/mim_stepwiseqtl.RData\n")
+```
+
+```{r mim-addint}
+# addint() tests every pairwise interaction among the QTL already in
+# the model (LG4, LG5, LG6, LG8, LG10), asking whether adding that
+# specific interaction term improves the model beyond the two main
+# effects alone
+#
+# narrower test than the genome-wide scantwo() scan below - this only
+# checks pairs among QTL already known, can't find an interacting
+# partner with no main effect of its own
+#
+# relevant threshold here is "int" (4.01) from the scantwo
+# permutations, since this is testing the interaction term
+# specifically
+
+z020.addint <- addint(
+  z020,
+  pheno.col = "PlantHeight",
+  qtl       = z020.ref3,
+  formula   = y ~ Q1 + Q2 + Q3 + Q4 + Q5
+)
+
+cat("=== Pairwise interaction tests among the 5 confirmed QTL ===\n\n")
+print(z020.addint)
+
+cat("\nint threshold (from scantwo permutations): 4.01\n")
+max_int_lod <- max(z020.addint$LOD)
+cat("Highest interaction LOD found:", round(max_int_lod, 3), "\n")
+
+if (max_int_lod > 4.01) {
+  cat("Result: at least one interaction exceeds the threshold.\n")
+} else {
+  cat("Result: no interaction among the 5 confirmed QTL exceeds the",
+      "threshold. No evidence of epistasis among these specific loci.\n")
+}
+
+save(z020.addint, file = "data/mim_addint.RData")
+cat("\nSaved to data/mim_addint.RData\n")
+```
+
+```{r mim-scantwo-actual}
+# the scantwo permutation chunk above only computed the permuted null
+# distribution - the scan on the REAL (non-permuted) data is a
+# separate run, needed to actually identify interacting pairs once
+# compared against the permutation thresholds
+#
+# cached to disk like the other slow steps, though this should be
+# noticeably quicker than the 1000-permutation run since it's one
+# scan, not a thousand
+
+rdata_scantwo_actual <- "data/mim_scantwo_actual.RData"
+
+if (file.exists(rdata_scantwo_actual)) {
+
+  load(rdata_scantwo_actual)
+  cat("Loaded cached scantwo actual-data results from:",
+      rdata_scantwo_actual, "\n")
+
+} else {
+
+  cat("Running scantwo() on the actual data (single scan, not",
+      "permuted). This should take a few minutes.\n")
+
+  z020.two <- scantwo(
+    z020,
+    pheno.col = "PlantHeight",
+    method    = "hk"
+  )
+
+  save(z020.two, file = rdata_scantwo_actual)
+  cat("Saved to:", rdata_scantwo_actual, "\n")
+}
+
+cat("\n=== Genome-wide two-QTL scan summary ===\n")
+cat("(showing pairs with notable full-model or interaction LOD)\n\n")
+print(summary(z020.two))
+
+save(z020.two, file = "data/mim_scantwo_actual.RData")
+```
+
+```{r mim-plot-lod-profile, fig.cap="Figure 14. LOD profile for the final five-QTL multiple interval mapping model, showing the profile around each QTL position with all other QTL held fixed in the model. Peak height and sharpness reflect each QTL's relative contribution and positional resolution."}
+# plotLodProfile() shows the LOD profile around each QTL's position
+# with the other four held fixed in the model - different from a
+# plain genome scan since it shows how sharply each position is
+# resolved GIVEN the rest of the model is already accounted for,
+# which is the more relevant view once a multi-QTL model exists
+#
+# a narrow sharp peak = well-resolved position. a broad flat one
+# usually points to lower marker density or a smaller effect size in
+# that region
+
+plotLodProfile(
+  z020.ref3,
+  main = "LOD Profile for Final 5-QTL Model -- Plant Height"
+)
+```
+
+## Multiple Interval Mapping Results Summary
+
+Multiple interval mapping built on the three QTL confirmed by
+composite interval mapping, identifying two additional loci through
+iterative scanning: linkage group 10 at 102 cM and linkage group 5
+at 13 cM. The final model of five QTL explained 42.31% of phenotypic
+variance in plant height, with the linkage group 6 and linkage
+group 4 loci contributing the largest individual effects. An
+independent automatic search confirmed linkage groups 4, 6, and 10
+as the most robustly supported QTL, while linkage groups 5 and 8
+were retained by the manual search as additional, more marginal
+loci. The linkage group 5 QTL was notable for showing the opposite
+direction of effect to all other loci in the model, with the B73
+allele rather than the NC350 allele associated with greater plant
+height. No evidence of epistatic interaction was found between any
+pair of QTL, either among the five loci in the final model or
+genome-wide, indicating that plant height in this population is
+controlled by a small number of additive QTL of varying effect
+size, consistent with the moderate-effect polygenic architecture
+suggested by the trait's continuous distribution.
+
